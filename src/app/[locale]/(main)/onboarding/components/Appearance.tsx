@@ -32,8 +32,8 @@ const Appearance: FC<AppearanceProsp> = ({ onSkip }) => {
   };
 
   const resolveSchema: yup.ObjectSchema<AppearancePayload> = yup.object({
-    description: yup.string().nullable().required().label(labels.description),
-    photo: yup.string().nullable().required().label(labels.photo),
+    description: yup.string().required().label(labels.description),
+    photo: yup.string().label(labels.photo),
   });
 
   const methods = useForm<AppearancePayload>({
@@ -48,6 +48,7 @@ const Appearance: FC<AppearanceProsp> = ({ onSkip }) => {
 
   const onSubmit: SubmitHandler<AppearancePayload> = async () => {
     // await mutateAsync({ payload });
+    onSkip?.();
   };
 
   const fields: FormBuilderProps['fields'] = {
@@ -80,6 +81,8 @@ const Appearance: FC<AppearanceProsp> = ({ onSkip }) => {
         width="100%"
         flex={1}
         px={2}
+        component="form"
+        onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
       >
         <Box>
           <Title
@@ -87,12 +90,7 @@ const Appearance: FC<AppearanceProsp> = ({ onSkip }) => {
             variant={isMobile ? 'h2' : 'h1'}
             sx={{ mt: 4, mb: 2, justifyContent: 'flex-start' }}
           />
-          <Grid
-            container
-            spacing={2}
-            component="form"
-            onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
-          >
+          <Grid container spacing={2}>
             <FormBuilder fields={fields} />
 
             <Grid size={{ xs: 12 }}>

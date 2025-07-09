@@ -5,7 +5,10 @@ import Title from '@/components/common/Title';
 import { FormBuilder } from '@/components/Fields';
 import { FormBuilderProps } from '@/components/Fields/components/FormBuilder';
 import { GREY_F9_COLOR } from '@/constants/general';
-import { DEFAULT_ONBOARDING_COMPLETE_PATH } from '@/constants/routes';
+import {
+  DEFAULT_ONBOARDING_COMPLETE_PATH,
+  DEFAULT_PRICING_PATH,
+} from '@/constants/routes';
 import { useAppContext } from '@/hooks/useAppContext';
 import { MemoriesPayload } from '@/services/onboarding/types';
 import { onInvalidSubmit } from '@/utils/form';
@@ -36,10 +39,7 @@ const Memories: FC<MemoriesProps> = ({ onSkip }) => {
 
   const resolveSchema: yup.ObjectSchema<Partial<MemoriesPayload>> = yup.object({
     description: yup.string().nullable().required().label(labels.description),
-    receiveReminderDate: yup
-      .string()
-      .nullable()
-      .label(labels.receiveReminderDate),
+    receiveReminderDate: yup.string().label(labels.receiveReminderDate),
   });
 
   const methods = useForm<Partial<MemoriesPayload>>({
@@ -54,7 +54,7 @@ const Memories: FC<MemoriesProps> = ({ onSkip }) => {
 
   const onSubmit: SubmitHandler<Partial<MemoriesPayload>> = async () => {
     // await mutateAsync({ payload });
-    router.push(DEFAULT_ONBOARDING_COMPLETE_PATH);
+    router.push(DEFAULT_PRICING_PATH);
   };
 
   const fields: FormBuilderProps['fields'] = {
@@ -105,6 +105,8 @@ const Memories: FC<MemoriesProps> = ({ onSkip }) => {
         width="100%"
         flex={1}
         px={2}
+        component="form"
+        onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
       >
         <Box>
           <Title
@@ -112,12 +114,7 @@ const Memories: FC<MemoriesProps> = ({ onSkip }) => {
             variant={isMobile ? 'h2' : 'h1'}
             sx={{ mt: 4, mb: 2, justifyContent: 'flex-start' }}
           />
-          <Grid
-            container
-            spacing={2}
-            component="form"
-            onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
-          >
+          <Grid container spacing={2}>
             <FormBuilder fields={fields} />
             <Grid size={{ xs: 12 }}>
               <MemoriesSocialConnet />

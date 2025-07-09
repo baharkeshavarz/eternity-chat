@@ -51,6 +51,7 @@ const CommunicationStyle: FC<CommunicationStyleProps> = ({ onSkip }) => {
 
   const onSubmit: SubmitHandler<CommunicationPayload> = async () => {
     //   await mutateAsync({ payload });
+    onSkip?.();
   };
 
   const fields: FormBuilderProps['fields'] = {
@@ -98,6 +99,8 @@ const CommunicationStyle: FC<CommunicationStyleProps> = ({ onSkip }) => {
         width="100%"
         flex={1}
         px={2}
+        component="form"
+        onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
       >
         <Box>
           <Title
@@ -105,12 +108,7 @@ const CommunicationStyle: FC<CommunicationStyleProps> = ({ onSkip }) => {
             variant={isMobile ? 'h3' : 'h1'}
             sx={{ mt: 4, mb: 2, justifyContent: 'flex-start' }}
           />
-          <Grid
-            container
-            spacing={3}
-            component="form"
-            onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
-          >
+          <Grid container spacing={3}>
             <FormBuilder fields={fields} />
 
             <Grid size={{ xs: 12, sm: 6 }}>

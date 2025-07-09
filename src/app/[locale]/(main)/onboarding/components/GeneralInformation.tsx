@@ -55,7 +55,8 @@ const GeneralInformation: FC<GeneralInformationProps> = ({ onSkip }) => {
   const onSubmit: SubmitHandler<GeneralInformationPayload> = async (
     payload,
   ) => {
-    await mutateAsync({ payload });
+    // await mutateAsync({ payload });
+    onSkip?.();
   };
 
   // TODO: Get from API
@@ -144,6 +145,8 @@ const GeneralInformation: FC<GeneralInformationProps> = ({ onSkip }) => {
         width="100%"
         flex={1}
         px={2}
+        component="form"
+        onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
       >
         <Box>
           <Title
@@ -151,12 +154,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({ onSkip }) => {
             variant={isMobile ? 'h2' : 'h1'}
             sx={{ mt: 4, mb: 2, justifyContent: 'flex-start' }}
           />
-          <Grid
-            container
-            spacing={2}
-            component="form"
-            onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
-          >
+          <Grid container spacing={2}>
             <FormBuilder fields={fields} />
           </Grid>
         </Box>

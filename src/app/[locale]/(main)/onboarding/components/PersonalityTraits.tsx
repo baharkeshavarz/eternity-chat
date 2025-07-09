@@ -43,7 +43,7 @@ const PersonalityTraits: FC<GeneralInformationProps> = ({ onSkip }) => {
       .nullable()
       .required()
       .label(labels.favoriteActivities),
-    personality: yup.array().nullable().required().label(labels.personality),
+    personality: yup.array().label(labels.personality),
   });
 
   const methods = useForm<PersonalityTraitsPayload>({
@@ -53,8 +53,8 @@ const PersonalityTraits: FC<GeneralInformationProps> = ({ onSkip }) => {
   const { handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<PersonalityTraitsPayload> = async (payload) => {
-    console.log(payload);
     // await mutateAsync({ payload });
+    onSkip?.();
   };
 
   const fields: FormBuilderProps['fields'] = {
@@ -99,6 +99,8 @@ const PersonalityTraits: FC<GeneralInformationProps> = ({ onSkip }) => {
         width="100%"
         flex={1}
         px={2}
+        component="form"
+        onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
       >
         <Box>
           <Title
@@ -106,12 +108,7 @@ const PersonalityTraits: FC<GeneralInformationProps> = ({ onSkip }) => {
             variant={isMobile ? 'h2' : 'h1'}
             sx={{ mt: 4, mb: 2, justifyContent: 'flex-start' }}
           />
-          <Grid
-            container
-            spacing={2}
-            component="form"
-            onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
-          >
+          <Grid container spacing={2}>
             <FormBuilder fields={fields} />
 
             <Grid size={{ xs: 12 }}>
