@@ -1,16 +1,21 @@
 import { CustomTextField } from '@/components/Fields';
-import { DEFAULt_MALE_AVATAR_IMAGE } from '@/constants/general';
+import {
+  DASHBOARD_FORM_LABELS,
+  DEFAULt_MALE_AVATAR_IMAGE,
+} from '@/constants/general';
 import { IAccountSetting } from '@/services/iam/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Avatar, Box, Button, Divider, Grid, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import SaveButton from '../../common/SaveButton';
+import { sharedTextFieldProps } from '../../common/SharedStyles';
 
 const ProfileForm = () => {
   const t = useTranslations();
+  const locale = useLocale();
 
   const labels: Record<keyof IAccountSetting, string> = {
     name: t('common.fields.name'),
@@ -28,7 +33,7 @@ const ProfileForm = () => {
     resolver: yupResolver(resolveSchema),
   });
   const { control } = methods;
-  console.log(control);
+  const typoClass = `latoStyleRegular-${locale}`;
 
   return (
     <FormProvider {...methods}>
@@ -38,12 +43,18 @@ const ProfileForm = () => {
         justifyContent="space-between"
         mb={3}
       >
-        <Box display="flex" alignItems="center" gap={2}>
+        <Box
+          display="flex"
+          alignItems="center"
+          gap={2}
+          justifyContent="space-between"
+          width="100%"
+        >
           <Avatar
             src={DEFAULt_MALE_AVATAR_IMAGE}
             sx={{ width: 64, height: 64 }}
           />
-          <Typography color="primary" sx={{ cursor: 'pointer' }}>
+          <Typography color="secondary.main" sx={{ cursor: 'pointer' }}>
             {t('common.fields.editImage')}
           </Typography>
         </Box>
@@ -51,23 +62,23 @@ const ProfileForm = () => {
       <Divider />
       <Grid container alignItems="center" py={2}>
         <Grid size={{ xs: 3 }}>
-          <Typography variant="body1">{labels.name}</Typography>
+          <Typography
+            variant="subtitle1"
+            fontWeight={400}
+            color={DASHBOARD_FORM_LABELS}
+            className={typoClass}
+          >
+            {labels.name}
+          </Typography>
         </Grid>
         <Grid size={{ xs: 9 }}>
           <CustomTextField
             label=""
             name="name"
-            placeholder={labels.name}
+            placeholder="Linda Peterson"
             variant="standard"
-            InputProps={{
-              endAdornment: <EditOutlinedIcon fontSize="small" />,
-            }}
-            sx={{
-              border: 'none',
-              borderBottom: '1px solid',
-              borderRadius: 0,
-              px: 0,
-            }}
+            className={typoClass}
+            {...sharedTextFieldProps}
           />
         </Grid>
       </Grid>
@@ -75,24 +86,24 @@ const ProfileForm = () => {
 
       <Grid container alignItems="center" py={2}>
         <Grid size={{ xs: 3 }}>
-          <Typography fontWeight={500}>{labels.email}</Typography>
+          <Typography
+            variant="subtitle1"
+            fontWeight={400}
+            color={DASHBOARD_FORM_LABELS}
+            className={typoClass}
+          >
+            {labels.email}
+          </Typography>
         </Grid>
         <Grid size={{ xs: 9 }}>
           <CustomTextField
             label=""
-            type="email"
             name="email"
-            placeholder={labels.email}
+            type="email"
+            placeholder={t('common.fields.emailPlaceholder')}
             variant="standard"
-            InputProps={{
-              endAdornment: <EditOutlinedIcon fontSize="small" />,
-            }}
-            sx={{
-              border: 'none',
-              borderBottom: '1px solid',
-              borderRadius: 0,
-              px: 0,
-            }}
+            className={typoClass}
+            {...sharedTextFieldProps}
           />
         </Grid>
       </Grid>
@@ -104,17 +115,26 @@ const ProfileForm = () => {
         justifyContent="space-between"
         py={2}
       >
-        <Typography>{t('common.buttons.changePassword')}</Typography>
+        <Typography
+          variant="subtitle1"
+          fontWeight={400}
+          color={DASHBOARD_FORM_LABELS}
+          className={typoClass}
+        >
+          {t('common.buttons.changePassword')}
+        </Typography>
         <ChevronRightIcon />
       </Box>
       <Divider />
 
       <Box py={2}>
-        <Button variant="text">{t('common.buttons.logout')}</Button>
+        <Button variant="text" color="error">
+          {t('common.buttons.logout')}
+        </Button>
       </Box>
 
       <Box mt={4} display="flex" justifyContent="flex-end">
-        <Button variant="contained"> {t('common.buttons.saveChanges')}</Button>
+        <SaveButton />
       </Box>
     </FormProvider>
   );

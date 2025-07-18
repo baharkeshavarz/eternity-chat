@@ -13,7 +13,6 @@ import {
   DateTimePickerProps,
   PickerValidDate,
 } from '@mui/x-date-pickers';
-import { type } from 'os';
 import { ReactNode } from 'react';
 import { ControllerProps, UseFormRegister } from 'react-hook-form';
 import { FileUploadProps } from 'react-material-file-upload';
@@ -52,8 +51,8 @@ export interface CustomDatePickerProps<TDate extends PickerValidDate = Date>
 export interface CustomSelectProps extends OutlinedInputProps {
   resetFieldsOnChange?: string[];
   options: Option[];
-  //sx?: SxProps;
   labelFormatter?: (option: Option) => ReactNode;
+  showEndAdornment?: boolean;
 }
 
 export interface CustomAutoCompleteProps<
@@ -123,6 +122,16 @@ export interface CustomTextFieldProps
   limitations?: TextLimitations & NumberLimitations;
   ControllerProps?: Partial<ControllerProps>;
   forbiddenChars?: string[];
+  slotProps?: {
+    input?: {
+      startAdornment?: ReactNode;
+      endAdornment?: ReactNode;
+    };
+    htmlInput?: {
+      startAdornment?: ReactNode;
+      endAdornment?: ReactNode;
+    };
+  };
 }
 
 export interface CurrencyTextFieldProps

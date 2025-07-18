@@ -88,3 +88,8 @@ export interface GetChatHistoryService {
 export interface ChatTextToVoiceService {
   ({ payload }: { payload: IChatTextToVoicePayload }): Response;
 }
+
+export interface IStartRankingFeedback {
+  star: number;
+  message?: string;
+}

@@ -14,6 +14,7 @@ const UserDetails: FC<UserDetailsProps> = ({ collapsed }) => {
     email: 'bahar.keshavarzc@gmail.com',
   };
   const isFetching = false;
+
   return (
     <Stack
       p={3}

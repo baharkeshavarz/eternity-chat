@@ -15,6 +15,8 @@ import { FC, useState } from 'react';
 import HelpCenterDialog from '../help-center/HelpCenterDialog';
 import SettingDialog from '../setting/SettingDialog';
 import RoundedIcon from '@/components/common/RoundedIcon';
+import NotificationDialog from '../notifications/NotificationDialog';
+import SubscriptionDialog from '../subscription/SubscriptionDialog';
 
 interface SidebarMenusProps {
   collapsed: boolean;
@@ -27,18 +29,32 @@ interface ISideBarMenu {
   linkUrl?: string;
   badgeCount?: number;
 }
+type DialogType = 'settings' | 'help' | 'notifications' | 'subscription' | null;
 
 const SidebarMenus: FC<SidebarMenusProps> = ({ collapsed }) => {
   const t = useTranslations();
-  const [settingDialog, setSettingDialog] = useState(false);
-  const [helpCenterDialog, setHelpCenterDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState<DialogType>(null);
 
   const onToggleSettingDialog = () => {
-    setSettingDialog((prevState) => !prevState);
+    setOpenDialog((prevState) =>
+      prevState === 'settings' ? null : 'settings',
+    );
   };
 
   const onToggleHelpCenterDialog = () => {
-    setHelpCenterDialog((prevState) => !prevState);
+    setOpenDialog((prevState) => (prevState === 'help' ? null : 'help'));
+  };
+
+  const onToggleNotificationDialog = () => {
+    setOpenDialog((prevState) =>
+      prevState === 'notifications' ? null : 'notifications',
+    );
+  };
+
+  const onToggleSubscriptionDialog = () => {
+    setOpenDialog((prevState) =>
+      prevState === 'subscription' ? null : 'subscription',
+    );
   };
 
   const menus: ISideBarMenu[] = [
@@ -46,6 +62,7 @@ const SidebarMenus: FC<SidebarMenusProps> = ({ collapsed }) => {
       text: t('common.sidebar.menu.notification'),
       icon: `${DEFAULT_DASHBOARD_ICONS}/notification.png`,
       badgeCount: 1,
+      callFunc: onToggleNotificationDialog,
     },
     {
       text: t('common.sidebar.menu.settings'),
@@ -55,6 +72,7 @@ const SidebarMenus: FC<SidebarMenusProps> = ({ collapsed }) => {
     {
       text: t('common.sidebar.menu.subscription'),
       icon: `${DEFAULT_DASHBOARD_ICONS}/credit-card.png`,
+      callFunc: onToggleSubscriptionDialog,
     },
     {
       text: t('common.sidebar.menu.helpCenter'),
@@ -137,10 +155,21 @@ const SidebarMenus: FC<SidebarMenusProps> = ({ collapsed }) => {
           );
         })}
       </List>
-      <SettingDialog open={settingDialog} onClose={onToggleSettingDialog} />
+      <SettingDialog
+        open={openDialog === 'settings'}
+        onClose={onToggleSettingDialog}
+      />
       <HelpCenterDialog
-        open={helpCenterDialog}
+        open={openDialog === 'help'}
         onClose={onToggleHelpCenterDialog}
+      />
+      <NotificationDialog
+        open={openDialog === 'notifications'}
+        onClose={onToggleNotificationDialog}
+      />
+      <SubscriptionDialog
+        open={openDialog === 'subscription'}
+        onClose={onToggleSubscriptionDialog}
       />
     </>
   );

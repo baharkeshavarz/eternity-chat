@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs } from '@mui/material';
 import { Dialog } from '@/components/Dialog';
 import { DialogProps } from '@/components/Dialog/Dialog';
 import { useTranslations } from 'next-intl';
@@ -6,15 +6,17 @@ import { FC, SyntheticEvent, useState } from 'react';
 import TabPanel from '@/components/TabPanel/TabPanel';
 import { useHelpCenterMenus } from './hooks/useHelpCenterMenus';
 import { DIALOG_SIDEBAR_WIDTH } from '@/constants/general';
-import { Search } from '@mui/icons-material';
+import { useAppContext } from '@/hooks/useAppContext';
+import { generalDialogMenuSettings } from '../setting/SettingDialog';
 
 export type HelpCenterDialogProps = DialogProps;
 
 const HelpCenterDialog: FC<HelpCenterDialogProps> = ({ ...props }) => {
   const t = useTranslations();
+  const { isMobile } = useAppContext();
   const menus = useHelpCenterMenus();
 
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
   const handleChange = (
     event: SyntheticEvent<Element, Event>,
     newValue: number,
@@ -31,31 +33,15 @@ const HelpCenterDialog: FC<HelpCenterDialogProps> = ({ ...props }) => {
       sx={{ marginX: 'auto' }}
       dialogButtons={[]}
     >
-      <Box display="flex">
+      <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }}>
         <Box sx={{ width: DIALOG_SIDEBAR_WIDTH, mr: 1 }}>
-          <Box display="flex" alignItems="center" mb={2} px={1.5}>
-            <Search fontSize="small" />
-            <Typography variant="body1">
-              {t('pages.helpCenter.menu.generalMsg')}
-            </Typography>
-          </Box>
           <Tabs
             value={value}
-            orientation="vertical"
             onChange={handleChange}
-            aria-label="settings tabs"
+            aria-label="help center tabs"
+            orientation={isMobile ? 'horizontal' : 'vertical'}
             sx={{
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                alignItems: 'flex-start',
-                borderRadius: 0.3,
-                marginBottom: 1,
-                color: 'text.primary',
-                '&.Mui-selected': {
-                  backgroundColor: (theme) => theme.palette.grey[200],
-                  border: (theme) => `1px solid ${theme.palette.grey[200]}`,
-                },
-              },
+              ...generalDialogMenuSettings,
             }}
           >
             {menus.map((menu, index) => (

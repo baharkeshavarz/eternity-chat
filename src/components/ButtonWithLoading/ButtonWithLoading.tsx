@@ -10,13 +10,13 @@ import { FC } from 'react';
 
 export interface ButtonWithLoadingProps extends ButtonProps {
   isLoading?: boolean;
+  needStyling?: boolean;
 }
 
 export const fancyButtonStyle: SxProps<Theme> = {
   position: 'relative',
   overflow: 'hidden',
   minWidth: 100,
-  height: FIXED_BUTTON_HEIGHT,
   padding: 0,
   display: 'flex',
   alignItems: 'center',
@@ -48,13 +48,18 @@ export const fancyButtonStyle: SxProps<Theme> = {
 const ButtonWithLoading: FC<ButtonWithLoadingProps> = ({
   isLoading,
   children,
+  needStyling = true,
   ...props
 }) => {
   return (
     <Button
       {...props}
       disabled={isLoading || props.disabled}
-      sx={{ ...fancyButtonStyle, ...props.sx }}
+      sx={{
+        ...(needStyling ? fancyButtonStyle : {}),
+        ...props.sx,
+        height: FIXED_BUTTON_HEIGHT,
+      }}
     >
       {isLoading ? <CircularProgress color="inherit" size={20} /> : children}
     </Button>

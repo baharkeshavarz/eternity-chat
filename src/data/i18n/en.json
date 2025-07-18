@@ -16,7 +16,7 @@
       "edit": "Edit",
       "delete": "Delete",
       "cancel": "Cancel",
-      "login": "login",
+      "login": "Login",
       "logout": "Logout",
       "setting": "Settings",
       "saveChanges": "Save Changes",
@@ -26,7 +26,10 @@
       "changePassword": "Change Password",
       "deleteAllChats": "Delete All Chats",
       "helpCenter": "Help Center",
-      "back": "Back"
+      "notifications": "Notifications",
+      "subscription": "Subscription",
+      "back": "Back",
+      "upgradeTopremium": "Upgrade to Premium"
     },
     "fields": {
       "name": "Name",
@@ -82,10 +85,6 @@
     }
   },
   "pages": {
-    "account": {
-      "logoutMsg": "Are you sure you want to log out?",
-      "logoutConfirm": "Yes, Log Me Out"
-    },
     "settings": {
       "menu": {
         "accountSetting": "Account Settings",
@@ -139,11 +138,44 @@
       "welcome": {
         "welcomeMsg": "Welcome to Eternity Chat",
         "description": "You now have access to text-based conversations with your AI companion — crafted from memories, moments, and the bond you shared."
+      },
+      "dialogs": {
+        "logout": {
+          "title": "Log Out?",
+          "description": "Are you sure you want to log out? You’ll need to sign in again to access your conversations and saved memories.",
+          "confirmButton": "Yes, Log Me Out!",
+          "cancelButton": "Cancel"
+        },
+        "deleteChat": {
+          "title": "Delete this Chat?",
+          "description": "This will permanently remove your conversation and all related memories. This action cannot be undone.",
+          "confirmButton": "Yes, Delete the Chat",
+          "cancelButton": "Cancel"
+        },
+        "endTheConversation": {
+          "title": "End This Conversation?",
+          "description": "Are you sure you want to close this session? You won’t be able to continue the conversation unless you start a new one.",
+          "confirmButton": "End the Chat",
+          "cancelButton": "I want to Continue"
+        },
+        "feedback": {
+          "title": "How was your experience with John today?",
+          "description": "Your input is valuable in helping us better understand your needs and tailor our service accordingly.",
+          "confirmButton": "Submit Feedback",
+          "message": "message",
+          "star": "Rate your experience",
+          "messagePlaceholder": "Share your thoughts..."
+        },
+        "feedbackThanks": {
+          "title": " Thank you!",
+          "subTitle": "Your feedback helps us improve Eternity Chat.",
+          "description": "We appreciate your input and will use it to enhance our service.",
+          "confirmButton": "Continue"
+        }
       }
     },
     "helpCenter": {
       "menu": {
-        "generalMsg": "How can we help you?",
         "faq": "FAQ",
         "contactSupport": {
           "title": "Contact Support",

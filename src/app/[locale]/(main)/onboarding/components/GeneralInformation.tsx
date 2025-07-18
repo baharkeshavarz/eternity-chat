@@ -2,7 +2,7 @@
 
 import { ButtonWithLoading } from '@/components/ButtonWithLoading';
 import Title from '@/components/common/Title';
-import { FormBuilder, Option } from '@/components/Fields';
+import { FormBuilder } from '@/components/Fields';
 import { FormBuilderProps } from '@/components/Fields/components/FormBuilder';
 import { useAppContext } from '@/hooks/useAppContext';
 import { generalInformationUpdate } from '@/services/onboarding';
@@ -16,6 +16,7 @@ import { FC } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import SkipStep from './SkipStep';
+import { genderList, relationshipList } from '@/constants/general';
 
 type GeneralInformationProps = {
   onSkip: () => void;
@@ -58,38 +59,6 @@ const GeneralInformation: FC<GeneralInformationProps> = ({ onSkip }) => {
     // await mutateAsync({ payload });
     onSkip?.();
   };
-
-  // TODO: Get from API
-  const relationshipList: Option[] = [
-    {
-      id: 1,
-      label: 'Friend',
-      value: 'Friend',
-    },
-    {
-      id: 2,
-      label: 'Family',
-      value: 'Family',
-    },
-    {
-      id: 3,
-      label: 'Spouse',
-      value: 'Spouse',
-    },
-  ];
-
-  const genderList: Option[] = [
-    {
-      id: 10,
-      label: 'Female',
-      value: 'Female',
-    },
-    {
-      id: 20,
-      label: 'Male',
-      value: 'Male',
-    },
-  ];
 
   const fields: FormBuilderProps['fields'] = {
     name: {

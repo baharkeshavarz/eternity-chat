@@ -1,5 +1,12 @@
 import { Close } from '@mui/icons-material';
-import { DialogActions, Divider, IconButton } from '@mui/material';
+import {
+  DialogActions,
+  Divider,
+  Grid,
+  IconButton,
+  SxProps,
+  Typography,
+} from '@mui/material';
 import MuiDialog, {
   type DialogProps as MuiDialogProps,
 } from '@mui/material/Dialog';
@@ -16,16 +23,20 @@ export interface DialogProps extends MuiDialogProps {
   dialogContentProps?: DialogContentProps;
   dialogButtons?: ButtonWithLoadingProps[];
   showDialogTitle?: boolean;
+  dialogActionSx?: SxProps;
 }
 
 const Dialog: FC<DialogProps> = ({
   title,
   showDialogTitle = true,
   dialogButtons,
+  dialogActionSx = {},
   ...props
 }) => {
   return (
     <MuiDialog
+      fullWidth
+      maxWidth={false}
       sx={{
         borderRadius: 0.7,
         ...props?.sx,
@@ -45,20 +56,23 @@ const Dialog: FC<DialogProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              fontWeight: '600',
+              py: 1,
+              px: 2,
             }}
           >
-            {title}
+            <Typography variant="h4" fontWeight="700">
+              {title}
+            </Typography>
             <IconButton
               aria-label="close-dialog"
               onClick={() => {
                 props.onClose?.({}, 'escapeKeyDown');
               }}
             >
-              <Close />
+              <Close sx={{ fontSize: 18 }} />
             </IconButton>
           </DialogTitle>
-          <Divider />
+          {title && <Divider />}
         </>
       )}
       <DialogContent {...props.dialogContentProps}>
@@ -72,9 +86,19 @@ const Dialog: FC<DialogProps> = ({
             justifyContent: 'center',
           }}
         >
-          {dialogButtons?.map((button, index) => {
-            return <ButtonWithLoading key={index} {...button} />;
-          })}
+          <Grid container spacing={0.2} sx={{ ...dialogActionSx }}>
+            {dialogButtons?.map((button, index) => {
+              return (
+                <Grid key={index} size={{ xs: 12 }}>
+                  <ButtonWithLoading
+                    needStyling={button.needStyling}
+                    key={index}
+                    {...button}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
         </DialogActions>
       )}
     </MuiDialog>

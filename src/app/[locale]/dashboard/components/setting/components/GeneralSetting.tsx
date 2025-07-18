@@ -4,12 +4,14 @@ import { Locale, LOCALE_VALUES } from '@/navigation';
 import { IGeneralSetting } from '@/services/iam/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import SaveButton from '../../common/SaveButton';
 
 const GeneralSetting = () => {
   const t = useTranslations();
+  const locale = useLocale();
   const langs = useLanguages();
 
   const labels: Record<keyof IGeneralSetting, string> = {
@@ -36,13 +38,15 @@ const GeneralSetting = () => {
     resolver: yupResolver(resolveSchema),
   });
   const { control } = methods;
-  console.log(control);
 
+  const typoClass = `latoStyleRegular-${locale}`;
   return (
     <FormProvider {...methods}>
       <Grid container alignItems="center" py={1}>
         <Grid size={{ xs: 4 }}>
-          <Typography variant="body1">{labels.themeType}</Typography>
+          <Typography variant="subtitle1" className={typoClass}>
+            {labels.themeType}
+          </Typography>
         </Grid>
         <Grid size={{ xs: 8 }} textAlign="right">
           <CustomSwitch label="" name="themeType" />
@@ -52,7 +56,9 @@ const GeneralSetting = () => {
 
       <Grid container alignItems="center" py={1}>
         <Grid size={{ xs: 4 }}>
-          <Typography fontWeight={500}>{labels.language}</Typography>
+          <Typography variant="subtitle1" className={typoClass}>
+            {labels.language}
+          </Typography>
         </Grid>
         <Grid size={{ xs: 8 }} textAlign="right" sx={{ px: 2 }}>
           <CustomSelect options={langs} />
@@ -62,16 +68,20 @@ const GeneralSetting = () => {
 
       <Grid container alignItems="center" py={1}>
         <Grid size={{ xs: 5 }}>
-          <Typography variant="body1">{labels.isDeleteChats}</Typography>
+          <Typography variant="subtitle1" className={typoClass}>
+            {labels.isDeleteChats}
+          </Typography>
         </Grid>
         <Grid size={{ xs: 7 }} textAlign="right">
-          <Button>{t('common.buttons.delete')}</Button>
+          <Button variant="text" color="error" className={typoClass}>
+            {t('common.buttons.delete')}
+          </Button>
         </Grid>
       </Grid>
       <Divider />
 
       <Box mt={4} display="flex" justifyContent="flex-end">
-        <Button variant="contained">{t('common.buttons.saveChanges')}</Button>
+        <SaveButton />
       </Box>
     </FormProvider>
   );

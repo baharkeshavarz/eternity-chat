@@ -6,7 +6,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 // TODO: make this data to be multi language
@@ -36,12 +36,15 @@ const faqData: IFAQ[] = [
 const FaqList = () => {
   const theme = useTheme();
   const t = useTranslations();
+  const locale = useLocale();
+
   const [expandedIndex, setExpandedIndex] = useState<number | false>(false);
 
   const handleChange =
     (index: number) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpandedIndex(isExpanded ? index : false);
     };
+  const typoClass = `latoStyleRegular-${locale}`;
 
   return (
     <>
@@ -58,10 +61,14 @@ const FaqList = () => {
               aria-controls={`panel${index}-content`}
               id={`panel${index}-header`}
             >
-              <Typography variant="subtitle1">{faq.question}</Typography>
+              <Typography variant="subtitle1" className={typoClass}>
+                {faq.question}
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography variant="body1">{faq.answer}</Typography>
+              <Typography variant="subtitle1" className={typoClass}>
+                {faq.answer}
+              </Typography>
             </AccordionDetails>
           </Accordion>
         ))}

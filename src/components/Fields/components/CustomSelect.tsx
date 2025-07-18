@@ -16,6 +16,7 @@ import useLocalFormContext from '../hooks/useLocalFormContext';
 import { CustomSelectProps } from '../types';
 import ClearButtonAdornment from './ClearButtonAdornment';
 import { FIXED_SELECT_HEIGHT } from '@/constants/general';
+import { sharedDropdownFieldProps } from '@/app/[locale]/dashboard/components/common/SharedStyles';
 
 const CustomSelect: FC<CustomSelectProps> = ({
   options = [],
@@ -24,6 +25,7 @@ const CustomSelect: FC<CustomSelectProps> = ({
   label,
   labelFormatter,
   resetFieldsOnChange = [],
+  showEndAdornment = true,
   ...props
 }) => {
   const { isLoading } = useLocalFormContext();
@@ -32,9 +34,6 @@ const CustomSelect: FC<CustomSelectProps> = ({
     formState: { errors },
     setValue,
   } = useFormContext();
-
-  // const { sx } = props;
-  // console.log(sx);
 
   return (
     <Controller
@@ -63,6 +62,8 @@ const CustomSelect: FC<CustomSelectProps> = ({
           });
         };
 
+        console.log('props :::::sx:::', props?.sx);
+
         return (
           <CustomSkeleton isLoading={isLoading}>
             <FormControl fullWidth error={!!errors[name]} size={size}>
@@ -74,27 +75,17 @@ const CustomSelect: FC<CustomSelectProps> = ({
                 )}
                 <Select
                   {...props}
-                  // inputProps={{
-                  //   MenuProps: {
-                  //     MenuListProps: {
-                  //       sx: {
-                  //         backgroundColor: 'red',
-                  //       },
-                  //     },
-                  //   },
-                  // }}
                   sx={{
                     height: FIXED_SELECT_HEIGHT,
+                    // ...sharedDropdownFieldProps,
+                    ...props?.sx,
                   }}
                   id={`${name}-select`}
                   value={normalizedValue}
                   onChange={handleChange}
                   endAdornment={
-                    normalizedValue ? (
-                      <ClearButtonAdornment
-                        onChange={field.onChange}
-                        // sx={{ marginRight: 1.5 }}
-                      />
+                    normalizedValue && showEndAdornment ? (
+                      <ClearButtonAdornment onChange={field.onChange} />
                     ) : undefined
                   }
                 >
@@ -105,6 +96,8 @@ const CustomSelect: FC<CustomSelectProps> = ({
                   ))}
                 </Select>
 
+                {/* <div>sx:{JSON.stringify(props.sx)}</div> */}
+                {/* <div>{props?.sx}</div> */}
                 {errors[name]?.message && (
                   <FormHelperText>
                     {errors[name]?.message?.toString()}

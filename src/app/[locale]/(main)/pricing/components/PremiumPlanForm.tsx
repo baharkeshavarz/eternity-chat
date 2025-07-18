@@ -22,13 +22,22 @@ import { useRouter } from 'next/navigation';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import PremiumPlanPriceCard from './PremiumPlanPriceCard';
+import { GREY_F9_COLOR, FIXED_INPUT_MEDIUM_HEIGHT } from '@/constants/general';
+import { useAppContext } from '@/hooks/useAppContext';
+import { sharedDropdownFieldProps } from '@/app/[locale]/dashboard/components/common/SharedStyles';
 
 type IPremimunPlanPayPayload = IPremimunPlanPay;
 
 const PremiumPlanForm = () => {
   const t = useTranslations();
+  const { isMobile } = useAppContext();
   const router = useRouter();
   const countriesList = useCountries();
+
+  const formInputsBg = {
+    ...greyOutlinedInputBackgroundSx(GREY_F9_COLOR),
+    height: FIXED_INPUT_MEDIUM_HEIGHT,
+  };
 
   const labels: Record<keyof IPremimunPlanPayPayload, string> = {
     cardholderName: t('common.fields.cardholderName'),
@@ -95,11 +104,11 @@ const PremiumPlanForm = () => {
         placeholder: t('common.fields.cardholderNameLable'),
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
-          size: { xs: 12, sm: 6 },
+          size: { xs: 6, md: 12 },
         },
       },
     },
@@ -111,11 +120,11 @@ const PremiumPlanForm = () => {
         placeholder: 'xxxx-xxxx-xxxx-xxxx',
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
-          size: { xs: 12, sm: 6 },
+          size: { xs: 6, md: 12 },
         },
       },
     },
@@ -127,11 +136,11 @@ const PremiumPlanForm = () => {
         placeholder: 'xxxx',
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
-          size: { xs: 12, sm: 6 },
+          size: { xs: 6, md: 12 },
         },
       },
     },
@@ -143,11 +152,11 @@ const PremiumPlanForm = () => {
         placeholder: 'xxxx',
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
-          size: { xs: 12, sm: 6 },
+          size: { xs: 6, md: 12 },
         },
       },
     },
@@ -159,7 +168,7 @@ const PremiumPlanForm = () => {
         placeholder: labels.address,
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
@@ -176,6 +185,7 @@ const PremiumPlanForm = () => {
         placeholder: labels.country,
         boldLabel: true,
         labelVariant: 'body1',
+        sx: { ...sharedDropdownFieldProps },
       },
       ui: {
         grid: {
@@ -191,7 +201,7 @@ const PremiumPlanForm = () => {
         placeholder: 'xxxx',
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
@@ -207,7 +217,7 @@ const PremiumPlanForm = () => {
         placeholder: labels.city,
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
@@ -223,7 +233,7 @@ const PremiumPlanForm = () => {
         placeholder: 'xxxx',
         boldLabel: true,
         labelVariant: 'body1',
-        sx: greyOutlinedInputBackgroundSx(''),
+        sx: formInputsBg,
       },
       ui: {
         grid: {
@@ -239,8 +249,9 @@ const PremiumPlanForm = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        px={16}
-        minHeight="100vh"
+        px={{ xs: 2, sm: 8, md: 16 }}
+        minHeight={isMobile ? '0' : '100vh'}
+        py={isMobile ? 2 : 0}
       >
         <FormProvider {...methods}>
           <Grid
@@ -255,7 +266,7 @@ const PremiumPlanForm = () => {
             <FormBuilder fields={fields} />
 
             <Grid size={{ xs: 12 }}>
-              <Stack spacing={2} mt={4}>
+              <Stack spacing={2} mt={2}>
                 <Typography variant="subtitle1" fontWeight="bold">
                   {t('pages.paymentPlans.payment.premiumPlanNoteTitle')}
                 </Typography>

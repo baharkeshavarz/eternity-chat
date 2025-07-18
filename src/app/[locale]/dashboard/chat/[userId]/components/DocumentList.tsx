@@ -46,7 +46,6 @@ const DocumentList = () => {
       },
     });
 
-    console.log(data);
     if (status === 200) {
       refetch();
     } else {

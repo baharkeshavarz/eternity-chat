@@ -98,7 +98,14 @@ const CustomTextField: FC<CustomTextFieldProps> = ({
                         {!props.disabled && value && (
                           <ClearButtonAdornment onChange={onChange} />
                         )}
-                        {props.InputProps?.endAdornment}
+                        {props?.slotProps &&
+                          props?.slotProps?.input?.endAdornment}
+                      </>
+                    ),
+                    startAdornment: (
+                      <>
+                        {props?.slotProps &&
+                          props?.slotProps?.input?.startAdornment}
                       </>
                     ),
                   },

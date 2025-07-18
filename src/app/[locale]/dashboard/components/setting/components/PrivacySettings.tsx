@@ -1,23 +1,27 @@
 import RollbackSwitch from '@/components/RollbackSwitch/RollbackSwitch';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
 const PrivacySettings = () => {
   const t = useTranslations();
+  const locale = useLocale();
+
   const onChange = useCallback((key: string, value: boolean) => {
     console.log(`Changed ${key} to`, value);
   }, []);
+
+  const typoClass = `latoStyleRegular-${locale}`;
   return (
     <>
       <Grid container alignItems="center" py={2}>
-        <Grid size={{ xs: 10 }}>
-          <Typography variant="body1">
+        <Grid size={{ xs: 11 }}>
+          <Typography variant="subtitle1" className={typoClass}>
             {t('pages.settings.privacy.twoFactorAuthentication')}
           </Typography>
         </Grid>
-        <Grid size={{ xs: 2 }}>
+        <Grid size={{ xs: 1 }}>
           <RollbackSwitch
             size="small"
             value={false}
@@ -31,9 +35,11 @@ const PrivacySettings = () => {
         display="flex"
         alignItems="center"
         justifyContent="space-between"
-        py={2}
+        py={2.5}
       >
-        <Typography>{t('pages.settings.privacy.sessionManagemnet')}</Typography>
+        <Typography variant="subtitle1" className={typoClass}>
+          {t('pages.settings.privacy.sessionManagement')}
+        </Typography>
         <ChevronRightIcon />
       </Box>
       <Divider />
