@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const OnboardingSlider = () => {
   const steps = useOnboardingSteps();
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
 
   return (
     <Box
