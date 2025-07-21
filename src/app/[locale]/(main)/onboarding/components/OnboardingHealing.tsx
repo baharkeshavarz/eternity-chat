@@ -19,8 +19,9 @@ const OnboardingHealing = () => {
       width="100%"
       sx={{
         position: 'relative',
-        minHeight: { xs: 400, sm: 700, md: 800 },
-        my: { xs: 10, sm: 0 },
+        minHeight: { xs: 250, sm: 700, md: 800 },
+        mt: 8,
+        mb: { xs: 18, sm: 0 },
       }}
     >
       <Box
@@ -36,7 +37,7 @@ const OnboardingHealing = () => {
       >
         <Image
           src={`${ONBOARDING_GRID_IMAGES}/chris.png`}
-          alt="Chris"
+          alt=""
           fill
           style={{ objectFit: 'cover' }}
           priority
