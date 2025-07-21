@@ -59,7 +59,7 @@ const OnboardingDescription: FC<OnboardingDescriptionProps> = ({
       flex={1}
       justifyContent="space-between"
       alignItems={{ xs: 'center', md: 'flex-start' }}
-      px={isMobile ? 2 : isTablet ? 12 : 16}
+      px={isMobile ? 4 : isTablet ? 12 : 16}
     >
       <Box my={{ xs: 8, sm: 8, md: 12 }}>
         {/* Dots */}
@@ -90,9 +90,14 @@ const OnboardingDescription: FC<OnboardingDescriptionProps> = ({
           alignItems={{ xs: 'center', md: 'flex-start' }}
           textAlign={{ xs: 'center', md: 'left' }}
         >
-          <Box mt={16}>
+          <Box mt={isMobile ? 6 : isTablet ? 12 : 16}>
             <Box maxWidth={DEFAULT_MAX_WIDTH_591}>
-              <Typography variant="h1" fontWeight="700" mb={2}>
+              <Typography
+                variant="h1"
+                fontWeight="700"
+                mb={isMobile ? 4 : 2}
+                fontSize={isMobile ? '24px' : '40px'}
+              >
                 {steps[activeStep].title}
               </Typography>
             </Box>
@@ -101,7 +106,7 @@ const OnboardingDescription: FC<OnboardingDescriptionProps> = ({
               <Typography
                 fontSize={18}
                 color="text.secondary"
-                mb={4}
+                mb={isMobile ? 0 : 4}
                 className={`latoStyleBold-${locale}`}
               >
                 {steps[activeStep].description}
@@ -119,7 +124,6 @@ const OnboardingDescription: FC<OnboardingDescriptionProps> = ({
         gap={2}
         width="100%"
         maxWidth={400}
-        mt={{ xs: 4, md: 0 }}
       >
         <Button
           onClick={handleSkip}
