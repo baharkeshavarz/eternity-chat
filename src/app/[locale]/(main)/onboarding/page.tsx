@@ -9,7 +9,7 @@ import { useAppContext } from '@/hooks/useAppContext';
 const OnboardingSlider = () => {
   const { isMobile } = useAppContext();
   const steps = useOnboardingSteps();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
 
   return (
     <Box

@@ -20,6 +20,7 @@ const OnboardingHealing = () => {
       sx={{
         position: 'relative',
         minHeight: { xs: 400, sm: 700, md: 800 },
+        my: { xs: 10, sm: 0 },
       }}
     >
       <Box
