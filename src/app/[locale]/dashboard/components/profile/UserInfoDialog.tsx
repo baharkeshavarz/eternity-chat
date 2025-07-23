@@ -1,11 +1,12 @@
 import { Dialog } from '@/components/Dialog';
 import { DialogProps } from '@/components/Dialog/Dialog';
-import { DIALOG_SIDEBAR_WIDTH } from '@/constants/general';
+import { DIALOG_SIDEBAR_WIDTH, FIXED_MODAL_856 } from '@/constants/general';
 import { Box } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
 import UserEditSidebar from './components/UserEditSidebar';
 import { useEditInfoMenus } from './hooks/useSettingMenus';
+import { useAppContext } from '@/hooks/useAppContext';
 
 export type UserInfoDialogProps = DialogProps;
 
@@ -13,14 +14,14 @@ const UserInfoDialog: FC<UserInfoDialogProps> = ({ ...props }) => {
   const t = useTranslations();
   const [selectedSection, setSelectedSection] = useState('General Information');
   const { accountSettingsMenus, standaloneItems } = useEditInfoMenus();
+  const { isMobile } = useAppContext();
 
   return (
     <Dialog
       {...props}
       title="Edit Info"
-      maxWidth="sm"
-      fullWidth
-      sx={{ marginX: 'auto' }}
+      maxWidth="md"
+      sx={{ width: isMobile ? '100%' : FIXED_MODAL_856, marginX: 'auto' }}
       dialogButtons={[]}
     >
       <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }}>

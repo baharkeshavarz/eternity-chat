@@ -30,6 +30,7 @@ const CustomMultipleAutoComplete: FC<
         }) => (
           <Autocomplete
             {...props}
+            popupIcon={props?.popupIcon}
             multiple
             size={size}
             onChange={(event, value) => {

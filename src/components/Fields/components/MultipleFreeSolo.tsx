@@ -7,8 +7,8 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { isAllNumbers } from '../utils';
 import useLocalFormContext from '../hooks/useLocalFormContext';
 import { MultipleFreeSoloProps } from '../types';
-import { PlusOneOutlined } from '@mui/icons-material';
 import CustomSkeleton from '../../common/CustomSkeleton';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 const MultipleFreeSolo: FC<MultipleFreeSoloProps> = ({
   name,
@@ -67,11 +67,11 @@ const MultipleFreeSolo: FC<MultipleFreeSoloProps> = ({
                   const { key, ...tagProps } = getTagProps({ index });
                   return (
                     <Chip
-                      variant="filled"
-                      color="primary"
+                      variant="outlined"
                       label={option}
                       key={key}
                       size="small"
+                      sx={{ border: 'none' }}
                       {...tagProps}
                     />
                   );
@@ -84,14 +84,24 @@ const MultipleFreeSolo: FC<MultipleFreeSoloProps> = ({
                   label={label}
                   error={!!error?.message}
                   helperText={error?.message?.toString()}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <IconButton onClick={handleClickOnAdd}>
-                        <PlusOneOutlined />
-                      </IconButton>
-                    ),
+                  slotProps={{
+                    input: {
+                      ...params.InputProps,
+                      endAdornment: (
+                        <IconButton onClick={handleClickOnAdd}>
+                          <AddCircleOutlineOutlinedIcon />
+                        </IconButton>
+                      ),
+                    },
                   }}
+                  // InputProps={{
+                  //   ...params.InputProps,
+                  //   endAdornment: (
+                  //     <IconButton onClick={handleClickOnAdd}>
+                  //       <PlusOneOutlined />
+                  //     </IconButton>
+                  //   ),
+                  // }}
                 />
               )}
             />

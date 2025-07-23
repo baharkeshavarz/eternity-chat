@@ -71,6 +71,7 @@ export interface CustomAutoCompleteProps<
   labelFormatter?: (option: Option) => ReactNode;
   name: string;
   label: string;
+  popupIcon?: any;
 }
 
 export type FreeSoloLimitations = Partial<{

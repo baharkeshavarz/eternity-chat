@@ -17,6 +17,7 @@ export const DEFAULT_MAX_WIDTH_713 = 713;
 export const DEFAULT_MAX_WIDTH_958 = 958;
 export const FIXED_BUTTON_WIDTH_IN_MODALS_DASHBOARD = 218;
 export const FIXED_LINEAR_PROGRESS = 200;
+export const FIXED_MODAL_856 = 856;
 
 export const ONBOARDING_BG_COLOR = '#EEBF95';
 export const GREY_3D_COLOR = '#3D3D3D';
@@ -50,53 +51,52 @@ export const PersonalityList: Option[] = [
   {
     id: 1,
     label: 'Caring',
-    value: 'Caring',
+    value: 1,
   },
   {
     id: 2,
     label: 'Funny',
-    value: 'Funny',
+    value: 2,
   },
   {
     id: 3,
     label: 'Thoughtful',
-    value: 'Thoughtful',
+    value: 3,
   },
   {
     id: 4,
     label: 'Adventurous',
-    value: 'Adventurous',
+    value: 4,
   },
   {
     id: 5,
     label: 'Intelligent',
-    value: 'Intelligent',
+    value: 5,
   },
-
   {
     id: 6,
     label: 'Creative',
-    value: 'Creative',
+    value: 6,
   },
   {
     id: 7,
     label: 'Calm',
-    value: 'Calm',
+    value: 7,
   },
   {
     id: 8,
     label: 'Outgoing',
-    value: 'Outgoing',
+    value: 8,
   },
   {
     id: 9,
     label: 'Quiet',
-    value: 'Quiet',
+    value: 9,
   },
   {
     id: 10,
     label: 'Other',
-    value: 'Other',
+    value: 10,
   },
 ];
 
@@ -146,11 +146,11 @@ export const genderList: Option[] = [
   {
     id: 10,
     label: 'Female',
-    value: 'Female',
+    value: 10,
   },
   {
     id: 20,
     label: 'Male',
-    value: 'Male',
+    value: 20,
   },
 ];

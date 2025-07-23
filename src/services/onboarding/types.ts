@@ -7,8 +7,8 @@ export interface GeneralInformationPayload {
 }
 
 export interface PersonalityTraitsPayload {
-  favoriteActivities: string;
-  personality?: string[];
+  favoriteActivities: string[];
+  personality?: number[];
 }
 
 export interface AppearancePayload {
