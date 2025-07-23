@@ -11,8 +11,12 @@ import { Avatar, Box, Divider, Grid, Typography } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import CustomDropdownIcon from '../../common/CustomDropdownIcon';
 import SaveButton from '../../common/SaveButton';
-import { sharedTextFieldProps } from '../../common/SharedStyles';
+import {
+  sharedTextFieldProps,
+  showOptionRightWithNoBorderSelectSx,
+} from '../../common/SharedStyles';
 
 const GeneralInformation = () => {
   const t = useTranslations();
@@ -38,6 +42,10 @@ const GeneralInformation = () => {
 
   const methods = useForm<GeneralInformationPayload>({
     resolver: yupResolver(resolveSchema),
+    defaultValues: {
+      relationship: 'Friend',
+      gender: 'Male',
+    },
   });
   const { control } = methods;
   const typoClass = `latoStyleRegular-${locale}`;
@@ -67,7 +75,7 @@ const GeneralInformation = () => {
         </Box>
       </Box>
       <Divider />
-      <Grid container alignItems="center" py={2}>
+      <Grid container alignItems="center" py={1}>
         <Grid size={{ xs: 3 }}>
           <Typography
             variant="subtitle1"
@@ -91,7 +99,7 @@ const GeneralInformation = () => {
       </Grid>
       <Divider />
 
-      <Grid container alignItems="center" py={2}>
+      <Grid container alignItems="center" py={1}>
         <Grid size={{ xs: 3 }}>
           <Typography
             variant="subtitle1"
@@ -103,11 +111,17 @@ const GeneralInformation = () => {
           </Typography>
         </Grid>
         <Grid size={{ xs: 9 }}>
-          <CustomSelect name="relationship" options={relationshipList} />
+          <CustomSelect
+            name="relationship"
+            options={relationshipList}
+            sx={showOptionRightWithNoBorderSelectSx}
+            IconComponent={CustomDropdownIcon}
+            showOptionRight
+          />
         </Grid>
       </Grid>
       <Divider />
-      <Grid container alignItems="center" py={2}>
+      <Grid container alignItems="center" py={1}>
         <Grid size={{ xs: 3 }}>
           <Typography
             variant="subtitle1"
@@ -119,7 +133,13 @@ const GeneralInformation = () => {
           </Typography>
         </Grid>
         <Grid size={{ xs: 9 }}>
-          <CustomSelect name="gender" options={genderList} />
+          <CustomSelect
+            name="gender"
+            options={genderList}
+            sx={showOptionRightWithNoBorderSelectSx}
+            IconComponent={CustomDropdownIcon}
+            showOptionRight
+          />
         </Grid>
       </Grid>
 

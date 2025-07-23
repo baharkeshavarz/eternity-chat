@@ -53,6 +53,8 @@ export interface CustomSelectProps extends OutlinedInputProps {
   options: Option[];
   labelFormatter?: (option: Option) => ReactNode;
   showEndAdornment?: boolean;
+  IconComponent?: any;
+  showOptionRight?: boolean;
 }
 
 export interface CustomAutoCompleteProps<

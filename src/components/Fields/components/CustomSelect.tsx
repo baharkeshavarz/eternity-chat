@@ -16,7 +16,6 @@ import useLocalFormContext from '../hooks/useLocalFormContext';
 import { CustomSelectProps } from '../types';
 import ClearButtonAdornment from './ClearButtonAdornment';
 import { FIXED_SELECT_HEIGHT } from '@/constants/general';
-import { sharedDropdownFieldProps } from '@/app/[locale]/dashboard/components/common/SharedStyles';
 
 const CustomSelect: FC<CustomSelectProps> = ({
   options = [],
@@ -26,6 +25,7 @@ const CustomSelect: FC<CustomSelectProps> = ({
   labelFormatter,
   resetFieldsOnChange = [],
   showEndAdornment = true,
+  showOptionRight = false,
   ...props
 }) => {
   const { isLoading } = useLocalFormContext();
@@ -62,12 +62,16 @@ const CustomSelect: FC<CustomSelectProps> = ({
           });
         };
 
-        console.log('props :::::sx:::', props?.sx);
-
         return (
           <CustomSkeleton isLoading={isLoading}>
             <FormControl fullWidth error={!!errors[name]} size={size}>
-              <Box style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <Box
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4,
+                }}
+              >
                 {label && (
                   <Typography variant="subtitle2" fontWeight="bold" mb={1}>
                     {label}
@@ -75,6 +79,7 @@ const CustomSelect: FC<CustomSelectProps> = ({
                 )}
                 <Select
                   {...props}
+                  IconComponent={props.IconComponent}
                   sx={{
                     height: FIXED_SELECT_HEIGHT,
                     // ...sharedDropdownFieldProps,
@@ -83,14 +88,25 @@ const CustomSelect: FC<CustomSelectProps> = ({
                   id={`${name}-select`}
                   value={normalizedValue}
                   onChange={handleChange}
-                  endAdornment={
+                  startAdornment={
                     normalizedValue && showEndAdornment ? (
                       <ClearButtonAdornment onChange={field.onChange} />
                     ) : undefined
                   }
                 >
                   {options?.map((option) => (
-                    <MenuItem key={option.id} value={option.value as string}>
+                    <MenuItem
+                      key={option.id}
+                      value={option.value as string}
+                      sx={
+                        showOptionRight
+                          ? {
+                              display: 'flex',
+                              justifyContent: 'flex-end',
+                            }
+                          : undefined
+                      }
+                    >
                       {labelFormatter ? labelFormatter(option) : option.label}
                     </MenuItem>
                   ))}

@@ -1,7 +1,6 @@
 import { CustomSelect, CustomTextField } from '@/components/Fields';
 import {
   DASHBOARD_FORM_LABELS,
-  DEFAULt_MALE_AVATAR_IMAGE,
   genderList,
   relationshipList,
 } from '@/constants/general';
