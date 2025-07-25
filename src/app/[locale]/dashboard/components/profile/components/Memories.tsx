@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import GeneralMemoriesInfo from './GeneralMemoriesInfo';
+import SocialMediaMemoriesInfo from './SocialMediaMemoriesInfo';
+
+const STEP_COMPONENTS = [
+  <GeneralMemoriesInfo key="general" />,
+  <SocialMediaMemoriesInfo key="social" />,
+];
 
 const Memories = () => {
-  return (
-    <div>
-      <h2>Memories</h2>
-      <p>Describe the memories of the individual.</p>
-    </div>
-  );
+  const [step, setStpe] = useState(0);
+  return <>{STEP_COMPONENTS[step]}</>;
 };
 
 export default Memories;

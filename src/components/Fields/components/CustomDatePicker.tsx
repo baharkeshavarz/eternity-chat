@@ -45,11 +45,17 @@ const CustomDatePicker: FC<ICustomDatePicker['props']> = ({
       <DatePicker
         format={format}
         {...props}
-        // label={label}
         value={(field.value as unknown as never) || ''}
         onChange={handleChange}
         onSelectedSectionsChange={() => {}}
         closeOnSelect={true}
+        sx={{
+          ...props?.sx,
+          '& .MuiPickersOutlinedInput-root .MuiPickersOutlinedInput-notchedOutline':
+            {
+              border: 'none',
+            },
+        }}
         slotProps={{
           textField: () => ({
             helperText: errors[name]?.message?.toString(),
@@ -65,7 +71,6 @@ const CustomDatePicker: FC<ICustomDatePicker['props']> = ({
                   )}
                 </>
               ),
-              sx: { ...props?.sx },
             },
           }),
         }}

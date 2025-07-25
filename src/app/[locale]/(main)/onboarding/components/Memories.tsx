@@ -6,7 +6,6 @@ import { FormBuilder } from '@/components/Fields';
 import { FormBuilderProps } from '@/components/Fields/components/FormBuilder';
 import { GREY_F9_COLOR } from '@/constants/general';
 import {
-  DEFAULT_ONBOARDING_COMPLETE_PATH,
   DEFAULT_PRICING_PATH,
 } from '@/constants/routes';
 import { useAppContext } from '@/hooks/useAppContext';
