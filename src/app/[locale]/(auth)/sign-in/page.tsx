@@ -18,10 +18,12 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import GoogleLoginButton from '../components/GoogleLoginButton';
 import RegisterTypography from '../components/RegisterTypography';
+import { useAuth } from 'react-oidc-context';
 
 const SignIn = () => {
   const t = useTranslations();
   const router = useRouter();
+  const auth = useAuth();
 
   const labels: Record<keyof SignInPayload, string> = {
     email: t('common.fields.email'),
@@ -64,20 +66,14 @@ const SignIn = () => {
         },
       },
     },
-    // password: {
-    //   name: 'password',
-    //   label: labels.password,
-    //   type: 'String',
-    //   props: {
-    //     type: 'password',
-    //   },
-    //   ui: {
-    //     grid: {
-    //       size: { xs: 12 },
-    //     },
-    //   },
-    // },
   };
+
+  if (auth.isLoading) return <p>Loading...</p>;
+  if (auth.error) return <p>Error: {auth.error.message}</p>;
+
+  if (!auth.isAuthenticated) {
+    return <button onClick={() => auth.signinRedirect()}>Login</button>;
+  }
 
   return (
     <Box
@@ -89,6 +85,7 @@ const SignIn = () => {
       minHeight="100vh"
       overflow="hidden"
     >
+      <button onClick={() => auth.signoutRedirect()}>Logout</button>
       <FormProvider {...methods}>
         <Title
           title={t('pages.signIn.welcomeMsg')}
@@ -113,7 +110,7 @@ const SignIn = () => {
             <Grid size={{ xs: 12 }}>
               <ButtonWithLoading
                 isLoading={isPending}
-                type="submit"
+                type="button"
                 fullWidth
                 variant="contained"
                 color="primary"

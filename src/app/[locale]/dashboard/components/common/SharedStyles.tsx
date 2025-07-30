@@ -1,4 +1,5 @@
 import { DEFAULT_DASHBOARD_ICONS } from '@/constants/general';
+import { green } from '@mui/material/colors';
 import Image from 'next/image';
 
 export const sharedTextFieldProps = {
@@ -45,5 +46,16 @@ export const showOptionRightWithNoBorderSelectSx = {
   '& .MuiSelect-select': {
     display: 'flex',
     justifyContent: 'flex-end',
+  },
+};
+
+export const sharedDatePickerFieldProps = {
+  textAlign: 'right',
+  '& .MuiPickersOutlinedInput-root .MuiPickersOutlinedInput-notchedOutline': {
+    border: 'none',
+  },
+  '& .MuiPickersInputBase-root .MuiPickersOutlinedInput-notchedOutline': {
+    direction: 'rtl', // Align the text inside the input to the right
+    backgroundColor: green,
   },
 };

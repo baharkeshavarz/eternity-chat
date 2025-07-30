@@ -51,10 +51,6 @@ const CustomDatePicker: FC<ICustomDatePicker['props']> = ({
         closeOnSelect={true}
         sx={{
           ...props?.sx,
-          '& .MuiPickersOutlinedInput-root .MuiPickersOutlinedInput-notchedOutline':
-            {
-              border: 'none',
-            },
         }}
         slotProps={{
           textField: () => ({
@@ -64,13 +60,9 @@ const CustomDatePicker: FC<ICustomDatePicker['props']> = ({
             variant,
             size: 'small',
             InputProps: {
-              startAdornment: (
-                <>
-                  {field.value && (
-                    <ClearButtonAdornment onChange={field.onChange} />
-                  )}
-                </>
-              ),
+              startAdornment: field.value ? (
+                <ClearButtonAdornment onChange={field.onChange} />
+              ) : undefined,
             },
           }),
         }}

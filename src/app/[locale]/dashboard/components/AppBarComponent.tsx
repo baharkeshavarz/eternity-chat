@@ -18,7 +18,7 @@ import { DEFAULT_DASHBOARD_ICONS } from '@/constants/general';
 import UserInfoDialog from './profile/UserInfoDialog';
 
 const AppBarComponent = () => {
-  const [openDialog, setOpenDialog] = useState(true); //TODO
+  const [openDialog, setOpenDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 

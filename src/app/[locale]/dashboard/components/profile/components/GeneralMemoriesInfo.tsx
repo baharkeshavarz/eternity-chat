@@ -13,6 +13,7 @@ import * as yup from 'yup';
 import CustomDropdownIcon from '../../common/CustomDropdownIcon';
 import SaveButton from '../../common/SaveButton';
 import {
+  sharedDatePickerFieldProps,
   sharedTextFieldProps,
   showOptionRightWithNoBorderSelectSx,
 } from '../../common/SharedStyles';
@@ -34,7 +35,7 @@ const GeneralMemoriesInfo = () => {
     resolver: yupResolver(resolveSchema),
     defaultValues: {
       description: 'The Parisian Cafe in November that...',
-      receiveReminderDate: '1996-10-04',
+      receiveReminderDate: '1996/10/04',
     },
   });
   const { control } = methods;
@@ -91,7 +92,7 @@ const GeneralMemoriesInfo = () => {
               <CustomDatePicker
                 name="receiveReminderDate"
                 label=""
-                // {...sharedTextFieldProps}
+                sx={sharedDatePickerFieldProps}
               />
             </Grid>
           </Grid>

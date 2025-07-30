@@ -21,6 +21,7 @@ import { headers } from 'next/headers';
 import { userAgent } from 'next/server';
 import { PropsWithChildren, ReactNode } from 'react';
 import '../../../global.css';
+import OidcAuthProvider from '@/providers/OidcAuthProvider';
 
 type LocaleLayoutParams = {
   children: ReactNode;
@@ -48,24 +49,26 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={languages?.[locale]?.direction}>
       <body>
-        <TanstackProvider>
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={themes[locale] ?? defaultTheme}>
-              <ToastProvider />
-              <AppProvider userAgent={reqUserAgent}>
-                <CssBaseline />
-                <GlobalStyles styles={globalStyles} />
-                <RTLProvider locale={locale}>
-                  <CustomLocalizationProvider locale={locale}>
-                    <I18nProvider locale={locale}>
-                      <ConfirmAlertProvider>{children}</ConfirmAlertProvider>
-                    </I18nProvider>
-                  </CustomLocalizationProvider>
-                </RTLProvider>
-              </AppProvider>
-            </ThemeProvider>
-          </AppRouterCacheProvider>
-        </TanstackProvider>
+        <OidcAuthProvider>
+          <TanstackProvider>
+            <AppRouterCacheProvider>
+              <ThemeProvider theme={themes[locale] ?? defaultTheme}>
+                <ToastProvider />
+                <AppProvider userAgent={reqUserAgent}>
+                  <CssBaseline />
+                  <GlobalStyles styles={globalStyles} />
+                  <RTLProvider locale={locale}>
+                    <CustomLocalizationProvider locale={locale}>
+                      <I18nProvider locale={locale}>
+                        <ConfirmAlertProvider>{children}</ConfirmAlertProvider>
+                      </I18nProvider>
+                    </CustomLocalizationProvider>
+                  </RTLProvider>
+                </AppProvider>
+              </ThemeProvider>
+            </AppRouterCacheProvider>
+          </TanstackProvider>
+        </OidcAuthProvider>
       </body>
     </html>
   );
