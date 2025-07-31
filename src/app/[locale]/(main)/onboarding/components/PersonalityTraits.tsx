@@ -39,7 +39,7 @@ const PersonalityTraits: FC<GeneralInformationProps> = ({ onSkip }) => {
 
   const resolveSchema: yup.ObjectSchema<PersonalityTraitsPayload> = yup.object({
     favoriteActivities: yup
-      .string()
+      .array()
       .nullable()
       .required()
       .label(labels.favoriteActivities),
