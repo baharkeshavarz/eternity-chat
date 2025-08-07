@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { User } from 'oidc-client-ts';
 import { toast } from 'react-toastify';
 
 export const config = {
@@ -11,13 +12,19 @@ export const config = {
   },
 };
 
-let token: string | null = null;
-
-export const setToken = (t: string) => {
-  token = t;
-};
-
 export const axiosInstance = axios.create(config);
+
+export const getUser = () => {
+  const oidcStorage = sessionStorage.getItem(
+    `oidc.user:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_AUTHORITY}:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_CLIENT_ID}`,
+  );
+
+  if (!oidcStorage) {
+    return null;
+  }
+
+  return User.fromStorageString(oidcStorage);
+};
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -26,8 +33,10 @@ axiosInstance.interceptors.request.use(
       config.headers['Accept-Language'] = lang;
     }
 
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+    const user = getUser();
+
+    if (user?.access_token) {
+      config.headers['Authorization'] = `Bearer ${user.access_token}`;
     }
     return config;
   },
