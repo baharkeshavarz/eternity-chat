@@ -1,6 +1,6 @@
-import { Locale } from "@/navigation";
-import { NextIntlClientProvider, useMessages } from "next-intl";
-import React, { FC, PropsWithChildren } from "react";
+import { Locale } from '@/navigation';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
+import React, { FC, PropsWithChildren } from 'react';
 
 export interface I18nProviderProps {
   locale: Locale;

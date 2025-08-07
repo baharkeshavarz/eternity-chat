@@ -1,10 +1,13 @@
 'use client';
 
+import useAxiosAuth from '@/hooks/useAxiosAuth';
 import { Box } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ToastProvider = () => {
+  const auth = useAxiosAuth();
+
   return (
     <Box
       sx={{

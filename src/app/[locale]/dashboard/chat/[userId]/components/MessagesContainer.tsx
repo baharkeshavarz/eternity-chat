@@ -9,8 +9,10 @@ import {
   SAMPLE_CHAT_USER_ID,
   SAMPLE_CHAT_USER_PERSONALITY,
 } from '@/constants/query-keys';
+import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 const MessagesContainer = () => {
+  const axiosAuth = useAxiosAuth();
   const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   const { data, isFetching } = useQuery({
@@ -18,9 +20,7 @@ const MessagesContainer = () => {
     queryKey: [GET_CHAT_HISTORY_QUERY_KEY, SAMPLE_CHAT_USER_ID],
     queryFn: async () => {
       const { data } = await getChatHistory({
-        userId: SAMPLE_CHAT_USER_ID,
         params: {
-          user_id: SAMPLE_CHAT_USER_ID,
           personality_name: SAMPLE_CHAT_USER_PERSONALITY,
         },
       });

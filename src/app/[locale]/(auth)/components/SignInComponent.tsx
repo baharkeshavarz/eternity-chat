@@ -13,6 +13,8 @@ const SignInComponent = () => {
     return <button onClick={() => auth?.signinRedirect()}>Login</button>;
   }
 
+  const user = auth.user;
+  console.log('user', user);
   return (
     <Box
       display="flex"
@@ -24,6 +26,13 @@ const SignInComponent = () => {
       overflow="hidden"
     >
       <button onClick={() => auth?.signoutRedirect()}>Logout</button>
+      <div>
+        <h2>
+          Welcome, {user?.profile?.name || user?.profile?.preferred_username}
+        </h2>
+        <p>Email: {user?.profile?.email}</p>
+        <p>access_token: {user?.access_token}</p>
+      </div>
     </Box>
   );
 };

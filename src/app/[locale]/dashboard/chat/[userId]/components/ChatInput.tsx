@@ -21,6 +21,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
 import ChatAIAccuracyMessage from './ChatAIAccuracyMessage';
+import useAxiosAuth from '@/hooks/useAxiosAuth';
 
 interface MessagePayload {
   message: string;
@@ -39,6 +40,7 @@ const ChatInput: FC<ChatInputProps> = ({
 }) => {
   const t = useTranslations();
   const { isMobile } = useAppContext();
+  const axiosAuth = useAxiosAuth();
 
   useEffect(() => {
     if (defaultQuestion) setMessage(defaultQuestion);
@@ -49,7 +51,9 @@ const ChatInput: FC<ChatInputProps> = ({
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [playbackKey, setPlaybackKey] = useState<string | null>(null);
 
-  const { mutateAsync, isPending } = useMutation({ mutationFn: chat });
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (args: { payload: any }) => chat(axiosAuth, args),
+  });
   const queryClient = useQueryClient();
 
   const createMessagePayload = (message: string): MessagePayload => ({

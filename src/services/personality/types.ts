@@ -30,17 +30,19 @@ export interface IUpdatePersonalityParams {
 }
 
 export interface CreatePersonalityService {
-  (args: { params: ICreatePersonality }): Response<Basic>;
+  (args: { axiosAuth: any; params: ICreatePersonality }): Response<Basic>;
 }
 
 export interface ListPersonalitiesService {
   (args: {
+    axiosAuth: any; // TODO: Replace with actual type if available
     params: { user_id?: string | null };
   }): Response<GetersonalitiesResponse>;
 }
 
 export interface UpdatePersonalityService {
   (args: {
+    axiosAuth: any; // TODO: Replace with actual type if available
     params: IUpdatePersonalityParams;
     payload: IPersonality;
   }): Response<Basic>;

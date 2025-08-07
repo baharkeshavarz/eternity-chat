@@ -11,31 +11,21 @@ export const config = {
   },
 };
 
-const _axios = axios.create(config);
+export const _axios = axios.create(config);
+export const axiosAuth = axios.create(config);
 
 _axios.interceptors.request.use(
-  function (config) {
-    const lang = 'en-EN';
+  (config) => {
+    const lang = 'en-EN'; //TODO: get from i18n or context
     if (lang) {
       config.headers['Accept-Language'] = lang;
     }
     return config;
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error);
   },
 );
-
-// function isUnauthorizedError(error: any) {
-//   const {
-//     response: { status, data },
-//   } = error;
-
-//   return status === 401 || !data.data;
-// }
-
-// let refreshingFunc: ReturnType<LoginByRefreshTokenService> | undefined =
-//   undefined;
 
 _axios.interceptors.response.use(
   (next) => {
@@ -84,5 +74,3 @@ _axios.interceptors.response.use(
     }
   },
 );
-
-export default _axios;

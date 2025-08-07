@@ -29,7 +29,6 @@ export interface ChatPayload {
 }
 
 export interface IChatHistoryParams {
-  user_id: string;
   personality_name: string;
 }
 
@@ -76,11 +75,11 @@ export interface IChatTextToVoicePayload {
 }
 
 export interface ChatService {
-  ({ payload }: { payload: ChatPayload }): Response<ChatResponse>;
+  (axiosAuth: any, payload: { payload: ChatPayload }): Response<ChatResponse>;
 }
 
 export interface GetChatHistoryService {
-  (args: { params: IChatHistoryParams; userId: number | string }): Response<
+  (args: { axiosAuth: any; params: IChatHistoryParams }): Response<
     IChatHistoryItem[]
   >;
 }
