@@ -1,4 +1,4 @@
-import { axiosAuth } from '@/lib/axios';
+import { axiosInstance } from '@/lib/axios';
 import {
   CreatePersonalityService,
   ListPersonalitiesService,
@@ -8,18 +8,18 @@ import {
 const BASE_URL = '/api/v1';
 
 export const createPersonality: CreatePersonalityService = ({ params }) => {
-  return axiosAuth.get(`${BASE_URL}/CreatePersonality`, { params });
+  return axiosInstance.get(`${BASE_URL}/CreatePersonality`, { params });
 };
 
 export const getListPersonalities: ListPersonalitiesService = ({ params }) => {
-  return axiosAuth.get(`${BASE_URL}/list-personalities`, { params });
+  return axiosInstance.get(`${BASE_URL}/list-personalities`, { params });
 };
 
 export const updatePersonality: UpdatePersonalityService = ({
   params,
   payload,
 }) => {
-  return axiosAuth.put(
+  return axiosInstance.put(
     `${BASE_URL}/modify-personality/${params.user_id}/${params.personality_name}`,
     payload,
     { params },

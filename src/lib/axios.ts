@@ -11,14 +11,23 @@ export const config = {
   },
 };
 
-export const _axios = axios.create(config);
-export const axiosAuth = axios.create(config);
+let token: string | null = null;
 
-_axios.interceptors.request.use(
+export const setToken = (t: string) => {
+  token = t;
+};
+
+export const axiosInstance = axios.create(config);
+
+axiosInstance.interceptors.request.use(
   (config) => {
-    const lang = 'en-EN'; //TODO: get from i18n or context
+    const lang = 'en-EN';
     if (lang) {
       config.headers['Accept-Language'] = lang;
+    }
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
@@ -27,7 +36,7 @@ _axios.interceptors.request.use(
   },
 );
 
-_axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (next) => {
     const message = next.data?.message;
     if (message) {

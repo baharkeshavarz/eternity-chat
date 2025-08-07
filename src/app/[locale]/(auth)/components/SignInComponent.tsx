@@ -1,6 +1,4 @@
 import { Box } from '@mui/material';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import { useAuth } from 'react-oidc-context';
 
 const SignInComponent = () => {

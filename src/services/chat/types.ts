@@ -75,13 +75,11 @@ export interface IChatTextToVoicePayload {
 }
 
 export interface ChatService {
-  (axiosAuth: any, payload: { payload: ChatPayload }): Response<ChatResponse>;
+  (payload: { payload: ChatPayload }): Response<ChatResponse>;
 }
 
 export interface GetChatHistoryService {
-  (args: { axiosAuth: any; params: IChatHistoryParams }): Response<
-    IChatHistoryItem[]
-  >;
+  (args: { params: IChatHistoryParams }): Response<IChatHistoryItem[]>;
 }
 
 export interface ChatTextToVoiceService {

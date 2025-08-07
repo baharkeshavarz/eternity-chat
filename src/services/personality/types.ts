@@ -18,7 +18,7 @@ export interface Personality {
   details: IPersonality;
 }
 
-export interface GetersonalitiesResponse {
+export interface GetPersonalitiesResponse {
   user_id: string;
   total_personalities: number;
   personalities: Personality[];
@@ -35,14 +35,12 @@ export interface CreatePersonalityService {
 
 export interface ListPersonalitiesService {
   (args: {
-    axiosAuth: any; // TODO: Replace with actual type if available
     params: { user_id?: string | null };
-  }): Response<GetersonalitiesResponse>;
+  }): Response<GetPersonalitiesResponse>;
 }
 
 export interface UpdatePersonalityService {
   (args: {
-    axiosAuth: any; // TODO: Replace with actual type if available
     params: IUpdatePersonalityParams;
     payload: IPersonality;
   }): Response<Basic>;

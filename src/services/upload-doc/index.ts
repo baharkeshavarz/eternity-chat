@@ -1,4 +1,4 @@
-import { axiosAuth } from '../../lib/axios';
+import { axiosInstance } from '../../lib/axios';
 import {
   DeleteDocumentService,
   ListDocumentService,
@@ -11,7 +11,7 @@ export const uploadDocumentsat: UploadDocumentService = ({
   payload,
   params,
 }) => {
-  return axiosAuth.post(
+  return axiosInstance.post(
     `${BASE_URL}/upload-documents/${params.user_id}/${params.personality_name}`,
     payload,
     { params, headers: { 'Content-Type': 'multipart/form-data' } },
@@ -19,14 +19,14 @@ export const uploadDocumentsat: UploadDocumentService = ({
 };
 
 export const listDocumentsat: ListDocumentService = ({ params }) => {
-  return axiosAuth.get(
+  return axiosInstance.get(
     `${BASE_URL}/documents/${params.user_id}/${params.personality_name}`,
     { params },
   );
 };
 
 export const deleteDocument: DeleteDocumentService = ({ params }) => {
-  return axiosAuth.delete(
+  return axiosInstance.delete(
     `${BASE_URL}/documents/${params.user_id}/${params.personality_name}/${params.document_name}`,
   );
 };

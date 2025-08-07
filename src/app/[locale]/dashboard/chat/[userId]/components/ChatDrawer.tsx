@@ -4,9 +4,9 @@ import { MINI_DRAWER_WIDTH } from '@/constants/general';
 import { SAMPLE_CHAT_USER_ID } from '@/constants/query-keys';
 import { GenderEnum } from '@/services/common/types';
 import { Avatar, Box, Stack, Tooltip } from '@mui/material';
+import AddPersonalityButton from './AddPersonalityButton';
 import AvatarSkeleton from './AvatarSkeleton';
 import UploadDocumentButton from './UploadDocumentButton';
-import AddPersonalityButton from './AddPersonalityButton';
 
 const ChatDrawer = () => {
   const { data, isFetching } = useGetPersonalities({
