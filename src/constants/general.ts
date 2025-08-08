@@ -35,6 +35,7 @@ export const DASHBOARD_FORM_LABELS = '#010A15';
 export const DEFAULt_NO_IMAGE = '/assets/images/placeholders/no-image.jpg';
 export const HOME_CHAT_EXPERIENCE = '/assets/images/home/home-chat.png';
 export const GOOGLE_ICON = '/assets/images/google.png';
+export const AWS_ICON = '/assets/images/aws-cognito.svg';
 export const DEFAULt_MALE_AVATAR_IMAGE = '/assets/images/users/linda.jpg';
 export const DEFAULt_FEMALE_AVATAR_IMAGE = '/assets/images/users/avatar-7.png';
 export const ONBOARDING_GRID_IMAGES = '/assets/images/onboarding';
