@@ -29,7 +29,6 @@ const DocumentList = () => {
   const t = useTranslations();
 
   const { data, isFetching, refetch } = useListDocuments({
-    user_id: SAMPLE_CHAT_USER_ID,
     personality_name: SAMPLE_CHAT_USER_PERSONALITY,
   });
 
@@ -41,7 +40,6 @@ const DocumentList = () => {
     const { data, status } = await mutateAsync({
       params: {
         document_name: docName,
-        user_id: SAMPLE_CHAT_USER_ID,
         personality_name: SAMPLE_CHAT_USER_PERSONALITY,
       },
     });

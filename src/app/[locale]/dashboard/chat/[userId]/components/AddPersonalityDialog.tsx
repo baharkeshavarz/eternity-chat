@@ -122,7 +122,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
       },
       ui: {
         grid: {
-          size: { xs: 12 },
+          size: { xs: 12, sm: 6 },
         },
       },
     },
@@ -135,7 +135,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
       },
       ui: {
         grid: {
-          size: { xs: 12 },
+          size: { xs: 12, sm: 6 },
         },
       },
     },
@@ -146,7 +146,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
       options: genderList,
       ui: {
         grid: {
-          size: { xs: 12 },
+          size: { xs: 12, sm: 6 },
         },
       },
     },
@@ -159,7 +159,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
       },
       ui: {
         grid: {
-          size: { xs: 12 },
+          size: { xs: 12, sm: 6 },
         },
       },
     },
@@ -170,7 +170,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
       options: tonsList,
       ui: {
         grid: {
-          size: { xs: 12 },
+          size: { xs: 12, sm: 6 },
         },
       },
     },
@@ -181,7 +181,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
       options: PersonalityList,
       ui: {
         grid: {
-          size: { xs: 12 },
+          size: { xs: 12, sm: 6 },
         },
       },
     },

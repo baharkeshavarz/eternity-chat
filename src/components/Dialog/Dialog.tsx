@@ -56,8 +56,7 @@ const Dialog: FC<DialogProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              py: 1,
-              px: 2,
+              p: 2,
             }}
           >
             <Typography variant="h4" fontWeight="700">

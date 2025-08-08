@@ -2,10 +2,7 @@ import { ButtonWithLoading } from '@/components/ButtonWithLoading';
 import FileUploadForm from '@/components/common/FileUploadForm';
 import { Dialog } from '@/components/Dialog';
 import { DialogProps } from '@/components/Dialog/Dialog';
-import {
-  SAMPLE_CHAT_USER_ID,
-  SAMPLE_CHAT_USER_PERSONALITY,
-} from '@/constants/query-keys';
+import { SAMPLE_CHAT_USER_PERSONALITY } from '@/constants/query-keys';
 import { uploadDocumentsat } from '@/services/upload-doc';
 import { onInvalidSubmit } from '@/utils/form';
 import { Box, Divider, Grid } from '@mui/material';
@@ -27,12 +24,8 @@ const UploadDocumentDialog: FC<UploadDocumentDialogProps> = ({ ...props }) => {
   });
 
   const onSubmit = async (payload: any) => {
-    const newPayload = {
-      user_id: SAMPLE_CHAT_USER_ID,
-      personality_name: SAMPLE_CHAT_USER_PERSONALITY.toLowerCase(),
-    };
-
     const formData = new FormData();
+    formData.append('personality_name', SAMPLE_CHAT_USER_PERSONALITY);
 
     Array.from(payload.files).forEach((file) => {
       formData.append('files', file as any);
@@ -40,7 +33,6 @@ const UploadDocumentDialog: FC<UploadDocumentDialogProps> = ({ ...props }) => {
 
     try {
       const { data, status } = await mutateAsync({
-        params: newPayload,
         payload: formData,
       });
       if (status === 200) {
