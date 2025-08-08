@@ -8,14 +8,11 @@ import FormBuilder, {
   FormBuilderProps,
 } from '@/components/Fields/components/FormBuilder';
 import { PersonalityList } from '@/constants/general';
-import {
-  GET_USER_PERSONALITIES_LIST_KEY,
-  SAMPLE_CHAT_USER_ID,
-} from '@/constants/query-keys';
+import { GET_USER_PERSONALITIES_LIST_KEY } from '@/constants/query-keys';
 import { queryClient } from '@/providers/TanstackProvider';
 import { GenderEnum, ToneEnum } from '@/services/common/types';
 import { createPersonality } from '@/services/personality';
-import { ICreatePersonality } from '@/services/personality/types';
+import { IPersonality } from '@/services/personality/types';
 import { onInvalidSubmit } from '@/utils/form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Grid } from '@mui/material';
@@ -27,7 +24,7 @@ import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 export type AddPersonalityDialogProps = DialogProps;
-type ICreatePersonalityPayload = Omit<ICreatePersonality, 'user_id'>;
+type ICreatePersonalityPayload = IPersonality;
 
 const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
   const t = useTranslations();
@@ -89,7 +86,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
     mutationFn: createPersonality,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [GET_USER_PERSONALITIES_LIST_KEY, SAMPLE_CHAT_USER_ID],
+        queryKey: [GET_USER_PERSONALITIES_LIST_KEY],
       });
     },
   });
@@ -99,7 +96,6 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
   ) => {
     const newPayload = {
       ...payload,
-      user_id: SAMPLE_CHAT_USER_ID,
     };
     const response = await mutateAsync({ payload: newPayload });
     if (response?.status === 200 && response?.data?.message) {

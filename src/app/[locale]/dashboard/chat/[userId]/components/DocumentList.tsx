@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  SAMPLE_CHAT_USER_ID,
-  SAMPLE_CHAT_USER_PERSONALITY,
-} from '@/constants/query-keys';
+import { SAMPLE_CHAT_USER_PERSONALITY } from '@/constants/query-keys';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import {

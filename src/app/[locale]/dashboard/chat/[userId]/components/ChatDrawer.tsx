@@ -1,7 +1,6 @@
 import useGenderList from '@/app/[locale]/(main)/hooks/useGenderList';
 import useGetPersonalities from '@/app/[locale]/(main)/hooks/useGetPersonalities';
 import { MINI_DRAWER_WIDTH } from '@/constants/general';
-import { SAMPLE_CHAT_USER_ID } from '@/constants/query-keys';
 import { GenderEnum } from '@/services/common/types';
 import { Avatar, Box, Stack, Tooltip } from '@mui/material';
 import AddPersonalityButton from './AddPersonalityButton';
@@ -9,9 +8,7 @@ import AvatarSkeleton from './AvatarSkeleton';
 import UploadDocumentButton from './UploadDocumentButton';
 
 const ChatDrawer = () => {
-  const { data, isFetching } = useGetPersonalities({
-    user_id: SAMPLE_CHAT_USER_ID,
-  });
+  const { data, isFetching } = useGetPersonalities();
   const genderMapper = useGenderList();
 
   const users = data?.personalities?.map((personality) => ({

@@ -3,10 +3,7 @@ import FormBuilder, {
   FormBuilderProps,
 } from '@/components/Fields/components/FormBuilder';
 import { greyOutlinedInputBackgroundSx } from '@/utils/general';
-import {
-  GET_USER_PERSONALITIES_LIST_KEY,
-  SAMPLE_CHAT_USER_ID,
-} from '@/constants/query-keys';
+import { GET_USER_PERSONALITIES_LIST_KEY } from '@/constants/query-keys';
 import { DEFAULT_PLAYMENT_PLANS_UPGRADE_SUCCESSFUL_PAY_PATH } from '@/constants/routes';
 import { useCountries } from '@/hooks/useCountries';
 import { queryClient } from '@/providers/TanstackProvider';
@@ -81,7 +78,7 @@ const PremiumPlanForm = () => {
     mutationFn: permiumPlanRegister,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [GET_USER_PERSONALITIES_LIST_KEY, SAMPLE_CHAT_USER_ID],
+        queryKey: [GET_USER_PERSONALITIES_LIST_KEY],
       });
     },
   });

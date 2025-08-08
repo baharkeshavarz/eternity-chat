@@ -10,9 +10,6 @@ export interface IPersonality {
   tone: ToneEnum;
 }
 
-export interface ICreatePersonality extends IPersonality {
-  user_id: string;
-}
 export interface Personality {
   name: string;
   details: IPersonality;
@@ -30,7 +27,7 @@ export interface IUpdatePersonalityParams {
 }
 
 export interface CreatePersonalityService {
-  (args: { payload: ICreatePersonality }): Response<Basic>;
+  (args: { payload: IPersonality }): Response<Basic>;
 }
 
 export interface ListPersonalitiesService {
