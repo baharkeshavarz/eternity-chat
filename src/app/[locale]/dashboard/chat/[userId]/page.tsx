@@ -11,11 +11,20 @@ import ChatInput from './components/ChatInput';
 import TopBar from '../../components/TopBar';
 import NotificationBar from '../../components/NotificationBar';
 import ChatAIAccuracyMessage from './components/ChatAIAccuracyMessage';
+import { useAuth } from 'react-oidc-context';
+import { DEFAULT_SIGNIN_PATH } from '@/constants/routes';
+import { useRouter } from 'next/navigation';
 
 const ChatPage = () => {
+  const router = useRouter();
   const { isMobile } = useAppContext();
   const [collapsed, setCollapsed] = useState(true);
   const toggleDrawer = () => setCollapsed(!collapsed);
+
+  const auth = useAuth();
+  if (!auth?.isAuthenticated) {
+    router.push(DEFAULT_SIGNIN_PATH);
+  }
 
   return (
     <Box
