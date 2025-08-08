@@ -28,7 +28,7 @@ export const getUser = () => {
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const lang = 'en-EN';
+    const lang = 'en-EN'; // TODO: get language from user settings or browser
     if (lang) {
       config.headers['Accept-Language'] = lang;
     }

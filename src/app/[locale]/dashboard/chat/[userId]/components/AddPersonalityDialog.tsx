@@ -101,7 +101,7 @@ const AddPersonalityDialog: FC<AddPersonalityDialogProps> = ({ ...props }) => {
       ...payload,
       user_id: SAMPLE_CHAT_USER_ID,
     };
-    const response = await mutateAsync({ params: newPayload });
+    const response = await mutateAsync({ payload: newPayload });
     if (response?.status === 200 && response?.data?.message) {
       methods.reset();
       props.onClose?.({}, 'backdropClick');

@@ -10,9 +10,7 @@ const useGetPersonalities = ({ user_id }: GetPersonalitiesProps) => {
   const query = useQuery({
     queryKey: [GET_USER_PERSONALITIES_LIST_KEY, user_id],
     queryFn: async () => {
-      const { data } = await getListPersonalities({
-        params: { user_id },
-      });
+      const { data } = await getListPersonalities();
       return data;
     },
     gcTime: 0,

@@ -7,12 +7,12 @@ import {
 
 const BASE_URL = '/api/v1';
 
-export const createPersonality: CreatePersonalityService = ({ params }) => {
-  return axiosInstance.get(`${BASE_URL}/CreatePersonality`, { params });
+export const createPersonality: CreatePersonalityService = ({ payload }) => {
+  return axiosInstance.post(`${BASE_URL}/personalities`, payload);
 };
 
-export const getListPersonalities: ListPersonalitiesService = ({ params }) => {
-  return axiosInstance.get(`${BASE_URL}/list-personalities`, { params });
+export const getListPersonalities: ListPersonalitiesService = () => {
+  return axiosInstance.get(`${BASE_URL}/personalities`);
 };
 
 export const updatePersonality: UpdatePersonalityService = ({

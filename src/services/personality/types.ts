@@ -30,13 +30,11 @@ export interface IUpdatePersonalityParams {
 }
 
 export interface CreatePersonalityService {
-  (args: { axiosAuth: any; params: ICreatePersonality }): Response<Basic>;
+  (args: { payload: ICreatePersonality }): Response<Basic>;
 }
 
 export interface ListPersonalitiesService {
-  (args: {
-    params: { user_id?: string | null };
-  }): Response<GetPersonalitiesResponse>;
+  (): Response<GetPersonalitiesResponse>;
 }
 
 export interface UpdatePersonalityService {
