@@ -23,7 +23,7 @@ export interface ISentiment {
 }
 
 export interface ChatPayload {
-  user_id: string;
+  // user_id: string;
   personality_name: string;
   message: string;
 }

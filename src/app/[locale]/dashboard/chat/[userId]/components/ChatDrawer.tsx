@@ -2,19 +2,27 @@ import useGenderList from '@/app/[locale]/(main)/hooks/useGenderList';
 import useGetPersonalities from '@/app/[locale]/(main)/hooks/useGetPersonalities';
 import { MINI_DRAWER_WIDTH } from '@/constants/general';
 import { GenderEnum } from '@/services/common/types';
-import { Avatar, Box, Stack, Tooltip } from '@mui/material';
+import { Avatar, Box, Link, Stack, Tooltip } from '@mui/material';
 import AddPersonalityButton from './AddPersonalityButton';
 import AvatarSkeleton from './AvatarSkeleton';
 import UploadDocumentButton from './UploadDocumentButton';
+import { IPersonality } from '@/services/personality/types';
+import { DEFAULT_DASHBOARD_CHAT_PATH } from '@/constants/routes';
 
 const ChatDrawer = () => {
   const { data, isFetching } = useGetPersonalities();
   const genderMapper = useGenderList();
 
-  const users = data?.personalities?.map((personality) => ({
-    title: personality.name,
-    icon: genderMapper[personality.details.gender || GenderEnum.Male].icon,
-  }));
+  // Extract personalities from API response
+  const personalities = data?.personalities?.[0]?.details || {};
+  const users = (Object.values(personalities) as IPersonality[]).map(
+    (personality) => {
+      return {
+        title: personality.name,
+        icon: genderMapper[personality.gender || GenderEnum.Male].icon,
+      };
+    },
+  );
 
   return (
     <>
@@ -36,14 +44,16 @@ const ChatDrawer = () => {
             <>
               {users?.map((user, index) => (
                 <Tooltip key={index} title={user.title || ''} arrow>
-                  <Avatar
-                    alt={user.title}
-                    src={(user.icon as string) || ''}
-                    sx={{
-                      width: { xs: 45, md: 60 },
-                      height: { xs: 45, md: 60 },
-                    }}
-                  />
+                  <Link href={`${DEFAULT_DASHBOARD_CHAT_PATH}/${user.title}`}>
+                    <Avatar
+                      alt={user.title}
+                      src={(user.icon as string) || ''}
+                      sx={{
+                        width: { xs: 45, md: 60 },
+                        height: { xs: 45, md: 60 },
+                      }}
+                    />
+                  </Link>
                 </Tooltip>
               ))}
             </>

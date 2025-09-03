@@ -17,9 +17,17 @@ import LoadingComponent from '@/components/common/LoadingComponent';
 import { useRouter } from 'next/navigation';
 
 const ChatPage = () => {
+  const router = useRouter();
   const { isMobile } = useAppContext();
   const [collapsed, setCollapsed] = useState(true);
   const toggleDrawer = () => setCollapsed(!collapsed);
+
+  const oidcStorage = sessionStorage.getItem(
+    `oidc.user:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_AUTHORITY}:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_CLIENT_ID}`,
+  );
+  if (!oidcStorage) {
+    router.push(DEFAULT_SIGNIN_PATH);
+  }
 
   return (
     <Box
@@ -60,15 +68,16 @@ const ChatPage = () => {
   );
 };
 
-export default withAuthenticationRequired(ChatPage, {
-  OnRedirecting: () => {
-    const router = useRouter();
-    if (typeof window !== 'undefined') {
-      router.push(DEFAULT_SIGNIN_PATH);
-    }
-    return <LoadingComponent />;
-  },
-  signinRedirectArgs: {
-    url_state: DEFAULT_SIGNIN_PATH,
-  },
-});
+export default ChatPage;
+// export default withAuthenticationRequired(ChatPage, {
+//   OnRedirecting: () => {
+//     const router = useRouter();
+//     if (typeof window !== 'undefined') {
+//       router.push(DEFAULT_SIGNIN_PATH);
+//     }
+//     return <LoadingComponent />;
+//   },
+//   signinRedirectArgs: {
+//     url_state: DEFAULT_SIGNIN_PATH,
+//   },
+// });

@@ -19,6 +19,7 @@ import { Box, InputBase } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import { FC, useEffect, useRef, useState } from 'react';
 
 interface MessagePayload {
@@ -39,6 +40,9 @@ const ChatInput: FC<ChatInputProps> = ({
   const t = useTranslations();
   const { isMobile } = useAppContext();
 
+  const params = useParams<{ userId: string }>();
+  const personalityId = params.userId;
+
   useEffect(() => {
     if (defaultQuestion) setMessage(defaultQuestion);
   }, [defaultQuestion]);
@@ -56,7 +60,7 @@ const ChatInput: FC<ChatInputProps> = ({
   const createMessagePayload = (message: string): MessagePayload => ({
     message: message.trim(),
     traceId: Date.now().toString(),
-    queryKey: [GET_CHAT_HISTORY_QUERY_KEY, SAMPLE_CHAT_USER_ID],
+    queryKey: [GET_CHAT_HISTORY_QUERY_KEY, personalityId],
   });
 
   const addMessageToHistory = (payload: MessagePayload) => {
@@ -64,7 +68,7 @@ const ChatInput: FC<ChatInputProps> = ({
       traceId: payload.traceId,
       message: payload.message,
       response: null,
-      personality_name: SAMPLE_CHAT_USER_PERSONALITY,
+      personality_name: personalityId,
       timestamp: new Date().toISOString(),
       has_context: false,
       isLoading: true,
@@ -78,7 +82,7 @@ const ChatInput: FC<ChatInputProps> = ({
 
   const convertAllMessagesToHistory = () => {
     queryClient.setQueryData<IChatHistoryItem[]>(
-      [GET_CHAT_HISTORY_QUERY_KEY, SAMPLE_CHAT_USER_ID],
+      [GET_CHAT_HISTORY_QUERY_KEY, personalityId],
       (prev) => {
         if (!prev || prev.length < 2) return prev;
         const updated = [...prev];
@@ -120,8 +124,8 @@ const ChatInput: FC<ChatInputProps> = ({
 
       const { data } = await mutateAsync({
         payload: {
-          user_id: SAMPLE_CHAT_USER_ID,
-          personality_name: SAMPLE_CHAT_USER_PERSONALITY,
+          // user_id: SAMPLE_CHAT_USER_ID,
+          personality_name: personalityId,
           message: trimmed,
         },
       });
