@@ -17,11 +17,14 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { FC, useEffect, useRef, useState } from 'react';
+import useGetPersonalities from '@/app/[locale]/(main)/hooks/useGetPersonalities';
+import { IPersonality } from '@/services/personality/types';
 
 interface MessagePayload {
   message: string;
   traceId: string;
   queryKey: [string, string];
+  personalityName: string;
 }
 
 type ChatInputProps = {
@@ -39,6 +42,13 @@ const ChatInput: FC<ChatInputProps> = ({
   const params = useParams<{ userId: string }>();
   const personalityId = params.userId;
 
+  // Get personalities to use first one as fallback
+  const { data: personalitiesData } = useGetPersonalities();
+  const personalities = personalitiesData?.personalities?.[0]?.details || {};
+  const firstPersonalityName = personalities
+    ? (Object.values(personalities)[0] as IPersonality)?.name
+    : '';
+
   useEffect(() => {
     if (defaultQuestion) setMessage(defaultQuestion);
   }, [defaultQuestion]);
@@ -47,16 +57,21 @@ const ChatInput: FC<ChatInputProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [playbackKey, setPlaybackKey] = useState<string | null>(null);
+  const [queuedMessage, setQueuedMessage] = useState<string | null>(null);
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (args: { payload: any }) => chat(args),
   });
   const queryClient = useQueryClient();
 
-  const createMessagePayload = (message: string): MessagePayload => ({
+  const createMessagePayload = (
+    message: string,
+    selectedPersonalityName: string,
+  ): MessagePayload => ({
     message: message.trim(),
     traceId: Date.now().toString(),
-    queryKey: [GET_CHAT_HISTORY_QUERY_KEY, personalityId],
+    queryKey: [GET_CHAT_HISTORY_QUERY_KEY, selectedPersonalityName],
+    personalityName: selectedPersonalityName,
   });
 
   const addMessageToHistory = (payload: MessagePayload) => {
@@ -64,7 +79,7 @@ const ChatInput: FC<ChatInputProps> = ({
       traceId: payload.traceId,
       message: payload.message,
       response: null,
-      personality_name: personalityId,
+      personality_name: payload.personalityName,
       timestamp: new Date().toISOString(),
       has_context: false,
       isLoading: true,
@@ -76,22 +91,18 @@ const ChatInput: FC<ChatInputProps> = ({
     );
   };
 
-  const convertAllMessagesToHistory = () => {
-    queryClient.setQueryData<IChatHistoryItem[]>(
-      [GET_CHAT_HISTORY_QUERY_KEY, personalityId],
-      (prev) => {
-        if (!prev || prev.length < 2) return prev;
-        const updated = [...prev];
-        const lastItem = updated[updated.length - 2];
-        if (lastItem.type === ChatMessageTypeEnum.CURRENT) {
-          updated[updated.length - 2] = {
-            ...lastItem,
-            type: ChatMessageTypeEnum.HISTORY,
-          };
+  const convertAllMessagesToHistory = (payload: MessagePayload) => {
+    queryClient.setQueryData<IChatHistoryItem[]>(payload.queryKey, (prev) => {
+      if (!prev || prev.length < 1) return prev;
+      const updated = [...prev];
+      for (let i = updated.length - 1; i >= 0; i -= 1) {
+        if (updated[i].type === ChatMessageTypeEnum.CURRENT) {
+          updated[i] = { ...updated[i], type: ChatMessageTypeEnum.HISTORY };
+          break;
         }
-        return updated;
-      },
-    );
+      }
+      return updated;
+    });
   };
 
   const updateMessageInHistory = (
@@ -107,21 +118,19 @@ const ChatInput: FC<ChatInputProps> = ({
     );
   };
 
-  const sendMessage = async () => {
-    const trimmed = message.trim();
-    if (!trimmed || isPending) return;
-
-    const payload = createMessagePayload(trimmed);
+  const performSend = async (text: string, personalityName: string) => {
+    const payload = createMessagePayload(text, personalityName);
     try {
       setMessage('');
+      // Ensure only one CURRENT item: convert any previous CURRENT to HISTORY first
+      convertAllMessagesToHistory(payload);
+      // Add the new outgoing message placeholder
       addMessageToHistory(payload);
-      convertAllMessagesToHistory();
       inputRef.current?.focus();
-
       const { data } = await mutateAsync({
         payload: {
-          personality_name: personalityId,
-          message: trimmed,
+          personality_name: personalityName,
+          message: text,
         },
       });
 
@@ -157,9 +166,31 @@ const ChatInput: FC<ChatInputProps> = ({
         isError: true,
       });
     }
-
     handleStartChat?.();
   };
+
+  const sendMessage = async () => {
+    const trimmed = message.trim();
+    if (!trimmed || isPending) return;
+
+    // Use personalityId from route, or fallback to first personality if available
+    const personalityToUse = personalityId || firstPersonalityName;
+    if (!personalityToUse) {
+      setQueuedMessage(trimmed);
+      return;
+    }
+
+    await performSend(trimmed, personalityToUse);
+  };
+
+  useEffect(() => {
+    if (queuedMessage && firstPersonalityName) {
+      const text = queuedMessage;
+      setQueuedMessage(null);
+      performSend(text, firstPersonalityName);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstPersonalityName]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
