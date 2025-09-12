@@ -1,6 +1,5 @@
 'use client';
 
-import { SAMPLE_CHAT_USER_PERSONALITY } from '@/constants/query-keys';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FolderIcon from '@mui/icons-material/Folder';
 import {
@@ -21,12 +20,15 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteDocument } from '@/services/upload-doc';
 import { toast } from 'react-toastify';
 import useListDocuments from '../../../components/documents/hooks/useListDocuments';
+import { useParams } from 'next/navigation';
 
 const DocumentList = () => {
   const t = useTranslations();
+  const params = useParams<{ userId: string }>();
+  const userName = params.userId;
 
   const { data, isFetching, refetch } = useListDocuments({
-    personality_name: SAMPLE_CHAT_USER_PERSONALITY,
+    personality_name: userName,
   });
 
   const { mutateAsync, isPending } = useMutation({
@@ -37,7 +39,7 @@ const DocumentList = () => {
     const { data, status } = await mutateAsync({
       params: {
         document_name: docName,
-        personality_name: SAMPLE_CHAT_USER_PERSONALITY,
+        personality_name: userName,
       },
     });
 

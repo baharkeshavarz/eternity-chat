@@ -3,11 +3,7 @@
 import RoundedIcon from '@/components/common/RoundedIcon';
 import VoicePlayer from '@/components/VoicePlayer';
 import { DEFAULT_DASHBOARD_ICONS } from '@/constants/general';
-import {
-  GET_CHAT_HISTORY_QUERY_KEY,
-  SAMPLE_CHAT_USER_ID,
-  SAMPLE_CHAT_USER_PERSONALITY,
-} from '@/constants/query-keys';
+import { GET_CHAT_HISTORY_QUERY_KEY } from '@/constants/query-keys';
 import { useAppContext } from '@/hooks/useAppContext';
 import { chat, textToSpeech } from '@/services/chat';
 import { ChatMessageTypeEnum, IChatHistoryItem } from '@/services/chat/types';
@@ -124,7 +120,6 @@ const ChatInput: FC<ChatInputProps> = ({
 
       const { data } = await mutateAsync({
         payload: {
-          // user_id: SAMPLE_CHAT_USER_ID,
           personality_name: personalityId,
           message: trimmed,
         },

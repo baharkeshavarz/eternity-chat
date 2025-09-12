@@ -2,7 +2,6 @@ import { ButtonWithLoading } from '@/components/ButtonWithLoading';
 import FileUploadForm from '@/components/common/FileUploadForm';
 import { Dialog } from '@/components/Dialog';
 import { DialogProps } from '@/components/Dialog/Dialog';
-import { SAMPLE_CHAT_USER_PERSONALITY } from '@/constants/query-keys';
 import { uploadDocumentsat } from '@/services/upload-doc';
 import { onInvalidSubmit } from '@/utils/form';
 import { Box, Divider, Grid } from '@mui/material';
@@ -11,11 +10,14 @@ import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import DocumentList from './DocumentList';
+import { useParams } from 'next/navigation';
 
 export type UploadDocumentDialogProps = DialogProps;
 
 const UploadDocumentDialog: FC<UploadDocumentDialogProps> = ({ ...props }) => {
   const t = useTranslations();
+  const params = useParams<{ userId: string }>();
+  const userName = params.userId;
 
   const methods = useForm();
   const { handleSubmit } = methods;
@@ -25,7 +27,7 @@ const UploadDocumentDialog: FC<UploadDocumentDialogProps> = ({ ...props }) => {
 
   const onSubmit = async (payload: any) => {
     const formData = new FormData();
-    formData.append('personality_name', SAMPLE_CHAT_USER_PERSONALITY);
+    formData.append('personality_name', userName);
 
     Array.from(payload.files).forEach((file) => {
       formData.append('files', file as any);

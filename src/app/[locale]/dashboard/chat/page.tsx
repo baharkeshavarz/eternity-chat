@@ -5,10 +5,14 @@ import {
   DefaultQuestionsList,
   GREY_3D_COLOR,
 } from '@/constants/general';
+import { SAMPLE_CHAT_ID } from '@/constants/query-keys';
+import { DEFAULT_DASHBOARD_CHAT_PATH } from '@/constants/routes';
 import { useAppContext } from '@/hooks/useAppContext';
 import { alpha, Box, Stack, Typography } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import useGetPersonalities from '../../(main)/hooks/useGetPersonalities';
 import NotificationBar from '../components/NotificationBar';
 import MobileSidebar from '../components/sidebar/MobileSidebar';
 import Sidebar from '../components/sidebar/Sidebar';
@@ -17,9 +21,7 @@ import ChatAIAccuracyMessage from './[userId]/components/ChatAIAccuracyMessage';
 import ChatDrawer from './[userId]/components/ChatDrawer';
 import ChatInput from './[userId]/components/ChatInput';
 import DefaultQuestionList from './[userId]/components/DefaultQuestionList';
-import { SAMPLE_CHAT_ID } from '@/constants/query-keys';
-import { DEFAULT_DASHBOARD_CHAT_PATH } from '@/constants/routes';
-import { useRouter } from 'next/navigation';
+import { IPersonality } from '@/services/personality/types';
 
 const ChatPage = () => {
   const t = useTranslations();
@@ -35,8 +37,16 @@ const ChatPage = () => {
     setSelectedDefaultQuestion(id);
   };
 
+  const { data, isFetching } = useGetPersonalities();
+
+  // Extract personalities from API response
+  const personalities = data?.personalities?.[0]?.details || {};
+  const user = personalities
+    ? (Object.values(personalities)[0] as IPersonality)?.name
+    : '';
+
   const handleStartChat = () => {
-    router.push(DEFAULT_DASHBOARD_CHAT_PATH + `/${SAMPLE_CHAT_ID}`);
+    router.push(DEFAULT_DASHBOARD_CHAT_PATH + `/${user}`);
   };
 
   return (
