@@ -37,7 +37,7 @@ const ChatPage = () => {
     setSelectedDefaultQuestion(id);
   };
 
-  const { data, isFetching } = useGetPersonalities();
+  const { data } = useGetPersonalities();
 
   // Extract personalities from API response
   const personalities = data?.personalities?.[0]?.details || {};

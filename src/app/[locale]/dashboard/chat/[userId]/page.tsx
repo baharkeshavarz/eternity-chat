@@ -2,7 +2,7 @@
 
 import { useAppContext } from '@/hooks/useAppContext';
 import { Box, Container, Stack } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import MessagesContainer from './components/MessagesContainer';
 import MobileSidebar from '../../components/sidebar/MobileSidebar';
@@ -22,12 +22,15 @@ const ChatPage = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleDrawer = () => setCollapsed(!collapsed);
 
-  const oidcStorage = sessionStorage.getItem(
-    `oidc.user:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_AUTHORITY}:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_CLIENT_ID}`,
-  );
-  if (!oidcStorage) {
-    router.push(DEFAULT_SIGNIN_PATH);
-  }
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const oidcStorage = window.sessionStorage.getItem(
+      `oidc.user:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_AUTHORITY}:${process.env.NEXT_PUBLIC_COGNITO_AUTH_CONFIG_CLIENT_ID}`,
+    );
+    if (!oidcStorage) {
+      router.replace(DEFAULT_SIGNIN_PATH);
+    }
+  }, [router]);
 
   return (
     <Box
